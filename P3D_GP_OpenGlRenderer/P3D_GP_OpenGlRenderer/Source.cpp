@@ -1,5 +1,6 @@
 // Trabalho prático - Programaçao 3D
-// renderer 3D para obj's
+// renderer 3D para obj's -> material -> texture (tga file)
+//	using VAO e 
 
 /*
 Fase 1[5 valores]:
@@ -41,6 +42,11 @@ carregado. Esta deformação deverá variar em função do tempo.
 
 // includes
 #include "Windowmanager.h"
+#include "OpenGlState.h"
+
+// define o tamanho da janela de visualizaçao
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 
 int main(void)
 {
@@ -55,7 +61,7 @@ int main(void)
 	// leitura do ficheiro
 	char obj_path[256];	// caminha para o directorio
 #pragma endregion Vars
-		
+
 	// iniciaçao para ler valores do ficheiro xyz
 	// indicaçao do caminho do ficheiro
 	std::cout << "Insert object directory: ";
@@ -64,13 +70,67 @@ int main(void)
 	std::cin.get(obj_path, sizeof(obj_path) / sizeof(obj_path[0]));
 	std::cout << "Checking file Directory..." << std::endl;
 
-
 	// inicia a criaçao de um objecto
 	obj_to_render_ = new P3D::Object(obj_path);
 
+	// confirma se o objecto foi carregado com sucesso
+	if (!obj_to_render_->Validate())
+		return -1; // caso nao existam vertices carregados, aborta o render
+
+	// inicia o estado do GL
+	if (!P3D::InitGLFW())
+		return -1;	// caso nao tenha iniciado correctamente, aborta
+
+	// inicia uma nova janela
+	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
+		WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	// cria uma nova janela
+	if (!window_manager_->CreateWindow())
+		return -1; // caso nao tenha conseguido criar uma janela, termina
+
+	// define a janela como contexto actual
+	glfwMakeContextCurrent(window_manager_->GetWindow());
+
+	// inicia o glew
+	if (!P3D::InitGLEW())
+		return -1;	// caso nao tenha iniciado correctamente, aborta
+
+	// inicia valores de OpenGL
+	P3D::InitOpenGL();
+
+	// imprime informaçao sobre o OpenGl em uso
+	P3D::PrintGlInformation();
+
+	// carrega objecto para memoria grafica
+	obj_to_render_->LoadBuffers();
+
+	// informa que o ciclo de render foi iniciado
+	std::cout << "\n === Render Cycle Started! ===" << std::endl;
+
+	// ciclo de render
+	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
+	{
+		// limpa os buffers de cor e de profundidade
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// update logico
+
+		// render Update
+
+
+		// alterna os buffers
+		glfwSwapBuffers(window_manager_->GetWindow());
+		// chama eventos de janela e input
+		glfwPollEvents();
+	}
+
+	// termina o espaço glfw, destroi janelas e cursores ainda abertos
+	P3D::CloseGL();
+
 	// aguarda o input
 	// ignora e limpa buffer de entrada actual
-	std::cin.clear();	
+	std::cin.clear();
 	std::cin.ignore();
 
 	system("pause");

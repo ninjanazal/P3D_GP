@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\FuncsHeaders">
+      <UniqueIdentifier>{e34a2c11-8e59-468b-80d2-dd2676f0a13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Obj">
+      <UniqueIdentifier>{69dca17a-44f5-4b87-a07f-217b3c011ee6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -21,19 +27,34 @@
     <ClCompile Include="LoadFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CallBacks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGlStateFuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WindowManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CallBacksDeff.h">
+      <Filter>Header Files\FuncsHeaders</Filter>
     </ClInclude>
     <ClInclude Include="FileFuncs.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FuncsHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGlState.h">
+      <Filter>Header Files\FuncsHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Obj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

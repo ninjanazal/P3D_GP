@@ -1,8 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-
+#pragma once
 #include "FileFuncs.h"
 
 namespace P3D
@@ -10,7 +6,7 @@ namespace P3D
 #pragma region AuxFuncs
 	// informaçao sobre funçoes presentes 
 	std::string LoadFile(const char*);		// leitura de ficheiro nao binario
-	std::string LoadBinFile(const char*);	// leitura de ficheiro binario
+	void ShowTgaFileSize(const char* file_path);	// mostra tamanho do ficheiro
 
 #pragma endregion AuxFuncs
 
@@ -107,12 +103,11 @@ namespace P3D
 					norm.push_back(glm::vec3(temp_x, temp_y, temp_z));
 				}
 			}
-
-			// returna se encontrou um material, a variavel vai vazia caso nao exista
-			// material definido
-			return material_found;
-
 		}
+
+		// returna se encontrou um material, a variavel vai vazia caso nao exista
+		// material definido
+		return material_found;
 	}
 
 
@@ -195,6 +190,17 @@ namespace P3D
 		return texture_found;
 	}
 
+	// leitura do ficheiro de textura
+	void LoadTextureValues(const char* file_path)
+	{
+		// Mostra tamano do ficheiro
+		ShowTgaFileSize(file_path);
+
+		// TODO
+		// descompressao e leitura dos dados da textura, provavelmente utilizado uma lib
+		// stb_image.h ????'		
+	}
+
 	// funçoes axiliariares
 #pragma region Helpers
 	// funçao auxiliar para carregar ficheiro nao binario
@@ -234,10 +240,8 @@ namespace P3D
 	}
 
 	// funçao auxiliar para carregar ficheiros binarios
-	std::string LoadBinFile(const char* file_path)
+	void ShowTgaFileSize(const char* file_path)
 	{
-		std::string tga_file_data;	// informaçao do ficheiro bin
-
 		// abre o ficheiro para leitura, confirmado anteriormente, coloco o ponteiro no fim do ficheiro
 		std::fstream file_load_bin_stream(file_path, std::ios::in | std::ios::binary | std::ios::ate);
 
@@ -246,27 +250,13 @@ namespace P3D
 		{
 			// guarda o tamanho do ficheiro em bits
 			size_t file_size = file_load_bin_stream.tellg();
-			// coloca o ponteiro de leitura no inicio da stream
-			file_load_bin_stream.seekg(0, std::ios::beg);
 
-			// cria espaço em memoria para os dados
-			char* data_to = new char[file_size + size_t(1)]{};
-			file_load_bin_stream.read(data_to, file_size);	// lê para temArray os dados do ficheiro
-
-			// marca o final da string de leitura
-			data_to[file_size] = 0;
-			// guarda dados  lidos em string
-			tga_file_data = data_to;
-			// liberta a memoria alocada
-			delete[] data_to;
-
-			// imprime que o ficheiro foi carregado com sucesso
-			std::cout << "-> File loaded to mem..." << std::endl;
+			// imprime o tamanho do ficheiro
+			std::cout << "Tga file size: " << static_cast<int>(file_size) << " bytes" << std::endl;
 		}
 		// fecha o ficheiro de leitura
 		file_load_bin_stream.close();
-		// retorna a informaçao carregada do ficheiro
-		return tga_file_data;
+
 	}
 #pragma endregion Helpers
 }
