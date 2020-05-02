@@ -45,7 +45,7 @@ namespace P3D
 		std::string mat_name, directory_, texture_name;	// nome do material, directoria, e nome da textura
 		glm::vec3 coeficients[3]{};	// valores de coeficientes
 		float specular_exponential;	// expoente especular
-
+		
 		// metodos privados
 		void PrintInfo();	// imprime dados do material
 	};

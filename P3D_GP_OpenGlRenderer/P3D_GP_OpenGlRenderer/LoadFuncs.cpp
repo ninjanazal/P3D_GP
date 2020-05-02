@@ -9,7 +9,8 @@ namespace P3D
 {
 #pragma region AuxFuncs
 	// informaçao sobre funçoes presentes 
-	std::string LoadFile(const char*);
+	std::string LoadFile(const char*);		// leitura de ficheiro nao binario
+	std::string LoadBinFile(const char*);	// leitura de ficheiro binario
 
 #pragma endregion AuxFuncs
 
@@ -199,35 +200,73 @@ namespace P3D
 	// funçao auxiliar para carregar ficheiro nao binario
 	std::string LoadFile(const char* file_path)
 	{
-		std::string xyz_file_data;	// informaçao do ficheiro xyz
+		std::string file_data;	// informaçao do ficheiro
 
 		// abre o ficheiro para leitura, anteriormente confirmado, coloca o ponteiro no fim do ficheiro
-		std::fstream xyz_file_load(file_path, std::ios::in | std::ifstream::ate);
+		std::fstream file_load_stream(file_path, std::ios::in | std::ifstream::ate);
 
 		// confirma se o ficheiro foi abert
-		if (xyz_file_load.is_open())
+		if (file_load_stream.is_open())
 		{
 			// guarda o tamanho do ficheiro em bits
-			size_t file_size = xyz_file_load.tellg();
+			size_t file_size = file_load_stream.tellg();
 			// coloca o leitor de volta ao inicio do ficheiro
-			xyz_file_load.seekg(0, std::ios::beg);
+			file_load_stream.seekg(0, std::ios::beg);
 
 			// cria espaço em memoria para os dados
 			char* data_to = new char[file_size + size_t(1)]{};
-			xyz_file_load.read(data_to, file_size);	// lê para tempArray os dados do ficheiro
+			file_load_stream.read(data_to, file_size);	// lê para tempArray os dados do ficheiro
 
 			// marca o final da string 
 			data_to[file_size] = 0;
 			// guarda os dados lidos na string
-			xyz_file_data = data_to;
+			file_data = data_to;
 			// elimina o tempArray
 			delete[] data_to;
 
 			// imprime que o ficheiro foi carregado com sucesso
 			std::cout << "-> File loaded to mem..." << std::endl;
 		}
+		// fecha o ficheiro de leitura
+		file_load_stream.close();
 		// retorna a informaçao carregada do ficheiro
-		return xyz_file_data;
+		return file_data;
+	}
+
+	// funçao auxiliar para carregar ficheiros binarios
+	std::string LoadBinFile(const char* file_path)
+	{
+		std::string tga_file_data;	// informaçao do ficheiro bin
+
+		// abre o ficheiro para leitura, confirmado anteriormente, coloco o ponteiro no fim do ficheiro
+		std::fstream file_load_bin_stream(file_path, std::ios::in | std::ios::binary | std::ios::ate);
+
+		// confirma se o ficheiro foi aberto
+		if (file_load_bin_stream.is_open())
+		{
+			// guarda o tamanho do ficheiro em bits
+			size_t file_size = file_load_bin_stream.tellg();
+			// coloca o ponteiro de leitura no inicio da stream
+			file_load_bin_stream.seekg(0, std::ios::beg);
+
+			// cria espaço em memoria para os dados
+			char* data_to = new char[file_size + size_t(1)]{};
+			file_load_bin_stream.read(data_to, file_size);	// lê para temArray os dados do ficheiro
+
+			// marca o final da string de leitura
+			data_to[file_size] = 0;
+			// guarda dados  lidos em string
+			tga_file_data = data_to;
+			// liberta a memoria alocada
+			delete[] data_to;
+
+			// imprime que o ficheiro foi carregado com sucesso
+			std::cout << "-> File loaded to mem..." << std::endl;
+		}
+		// fecha o ficheiro de leitura
+		file_load_bin_stream.close();
+		// retorna a informaçao carregada do ficheiro
+		return tga_file_data;
 	}
 #pragma endregion Helpers
 }
