@@ -85,6 +85,9 @@ namespace P3D
 			// retorna
 			return false;
 		}
+		// define o viewPort
+		glViewport(0, 0, window_width, window_height);
+
 		// se conseguiu criar a janela
 		// informa
 		std::cout << "Window created successfully!" << std::endl;

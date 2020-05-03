@@ -18,4 +18,8 @@ namespace P3D
 	std::string LoadObjMaterialValues(const char* file_path, glm::vec3 (&coef)[3], float&specular);
 	// Funçao de leitura de dados de textura (.tga)
 	void LoadTextureValues(const char* file_path);
+
+	// shader
+	// Funçao de leitura de ficheiro binario
+	std::string LoadShader(const char* file_path);
 }

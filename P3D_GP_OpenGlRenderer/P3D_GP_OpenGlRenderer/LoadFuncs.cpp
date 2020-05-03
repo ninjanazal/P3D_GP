@@ -110,7 +110,7 @@ namespace P3D
 		return material_found;
 	}
 
-
+	// carrega valores do material a partir do ficheiro mtl
 	std::string LoadObjMaterialValues(const char* file_path, glm::vec3(&coef)[3], float& spec_exp)
 	{
 		// define uma string com toda a informaçao presente no ficheiro
@@ -201,6 +201,43 @@ namespace P3D
 		// stb_image.h ????'		
 	}
 
+	// leitura de valores de shader
+	std::string LoadShader(const char* file_path)
+	{
+		// inicia um buffer de leitura
+		std::string shader_data;
+		// abre o ficheiro para leitura em binario, coloca o ponteiro no fim do ficheiiro
+		std::ifstream shader_load_stream(file_path,
+			std::ifstream::in | std::ifstream::binary | std::ifstream::ate);
+
+		// verifica se abrio o ficheiro
+		if (shader_load_stream.is_open())
+		{
+			// guarda o tamanho do ficheiro
+			size_t file_size = shader_load_stream.tellg();
+			// coloca o ponteiro de leitura de volta no inicio do ficheiro
+			shader_load_stream.seekg(0, std::ifstream::beg);
+
+			// cria espaço em memoria para os dados
+			char* data_to = new char[file_size + size_t(1)];
+			shader_load_stream.read(data_to, file_size);	// le para o tempArray os dados do ficheiro
+
+			// marca o final da string
+			data_to[file_size] = 0;
+			// guarda os dados lidos na string de retorno
+			shader_data = data_to;
+			// elimina o array temporario
+			delete[] data_to;
+
+			// informa que o ficheiro foi carregado com sucesso
+			std::cout << "-> Shader File loaded to mem..." << std::endl;
+		}
+		// fecha o ficheiro de leitura
+		shader_load_stream.close();
+		// retorna a informaçao carregada
+		return shader_data;
+	}
+
 	// funçoes axiliariares
 #pragma region Helpers
 	// funçao auxiliar para carregar ficheiro nao binario
@@ -209,7 +246,7 @@ namespace P3D
 		std::string file_data;	// informaçao do ficheiro
 
 		// abre o ficheiro para leitura, anteriormente confirmado, coloca o ponteiro no fim do ficheiro
-		std::fstream file_load_stream(file_path, std::ios::in | std::ifstream::ate);
+		std::ifstream file_load_stream(file_path, std::ifstream::in | std::ifstream::ate);
 
 		// confirma se o ficheiro foi abert
 		if (file_load_stream.is_open())
@@ -217,7 +254,7 @@ namespace P3D
 			// guarda o tamanho do ficheiro em bits
 			size_t file_size = file_load_stream.tellg();
 			// coloca o leitor de volta ao inicio do ficheiro
-			file_load_stream.seekg(0, std::ios::beg);
+			file_load_stream.seekg(0, std::ifstream::beg);
 
 			// cria espaço em memoria para os dados
 			char* data_to = new char[file_size + size_t(1)]{};

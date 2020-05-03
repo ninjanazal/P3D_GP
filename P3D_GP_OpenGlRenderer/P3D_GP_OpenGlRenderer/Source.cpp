@@ -63,7 +63,6 @@ int main(void)
 	char obj_path[256];	// caminha para o directorio
 #pragma endregion Vars
 
-
 	// iniciaçao para ler valores do ficheiro xyz
 	// indicaçao do caminho do ficheiro
 	std::cout << "Insert object directory: ";
@@ -83,18 +82,20 @@ int main(void)
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
-
-	// inicia o estado do GL
+		// inicia o estado do GL
 	P3D::StartStateGl(*window_manager_);
 
+
 	// carrega objecto para memoria grafica
-	obj_to_render_->LoadBuffers();
+	obj_to_render_->LoadBuffers();	
+	// carrega shaders para GPU
+	if(!obj_to_render_->LoadShaders()) return 0;
 
-
+	// liga os atributos ás propriedades do shader
+	obj_to_render_->ConnectShaderValues();
 
 	// informa que o ciclo de render foi iniciado
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
-
 
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
