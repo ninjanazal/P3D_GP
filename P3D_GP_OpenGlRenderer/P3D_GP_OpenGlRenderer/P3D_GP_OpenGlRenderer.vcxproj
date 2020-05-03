@@ -138,13 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CallBacks.cpp" />
     <ClCompile Include="LoadFuncs.cpp" />
     <ClCompile Include="OpenGlStateFuncs.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CallBacksDeff.h" />
     <ClInclude Include="FileFuncs.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Object.h" />

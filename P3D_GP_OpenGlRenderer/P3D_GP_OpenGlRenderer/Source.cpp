@@ -41,6 +41,7 @@ carregado. Esta deformação deverá variar em função do tempo.
 */
 
 // includes
+#include "Object.h"
 #include "Windowmanager.h"
 #include "OpenGlState.h"
 
@@ -50,7 +51,7 @@ carregado. Esta deformação deverá variar em função do tempo.
 
 int main(void)
 {
-	// debugging
+	// Starting
 	std::cout << " ***** Starting *****\n";
 
 #pragma region Vars
@@ -61,6 +62,7 @@ int main(void)
 	// leitura do ficheiro
 	char obj_path[256];	// caminha para o directorio
 #pragma endregion Vars
+
 
 	// iniciaçao para ler valores do ficheiro xyz
 	// indicaçao do caminho do ficheiro
@@ -77,36 +79,22 @@ int main(void)
 	if (!obj_to_render_->Validate())
 		return -1; // caso nao existam vertices carregados, aborta o render
 
-	// inicia o estado do GL
-	if (!P3D::InitGLFW())
-		return -1;	// caso nao tenha iniciado correctamente, aborta
-
 	// inicia uma nova janela
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	// cria uma nova janela
-	if (!window_manager_->CreateWindow())
-		return -1; // caso nao tenha conseguido criar uma janela, termina
 
-	// define a janela como contexto actual
-	glfwMakeContextCurrent(window_manager_->GetWindow());
-
-	// inicia o glew
-	if (!P3D::InitGLEW())
-		return -1;	// caso nao tenha iniciado correctamente, aborta
-
-	// inicia valores de OpenGL
-	P3D::InitOpenGL();
-
-	// imprime informaçao sobre o OpenGl em uso
-	P3D::PrintGlInformation();
+	// inicia o estado do GL
+	P3D::StartStateGl(*window_manager_);
 
 	// carrega objecto para memoria grafica
 	obj_to_render_->LoadBuffers();
 
+
+
 	// informa que o ciclo de render foi iniciado
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
+
 
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
@@ -130,8 +118,7 @@ int main(void)
 
 	// aguarda o input
 	// ignora e limpa buffer de entrada actual
-	std::cin.clear();
-	std::cin.ignore();
+	std::cin.clear(); std::cin.ignore();
 
 	system("pause");
 	return 0;

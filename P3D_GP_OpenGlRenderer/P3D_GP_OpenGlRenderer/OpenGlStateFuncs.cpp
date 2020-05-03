@@ -1,9 +1,12 @@
 #pragma once
 #include "OpenGlState.h"
-#include "CallBacksDeff.h"
 
 namespace P3D
 {
+	// decleraçao da funçao de callback para erros
+	void ErrorCallback(int error, const char* descripton);
+
+
 	// funçao que inicia o estado do GL
 	bool InitGLFW()
 	{
@@ -11,7 +14,7 @@ namespace P3D
 		std::cout << "\n\n\t\t====== Stating GLState =====\n\n" << std::endl;
 
 		// define o callback para erros
-		glfwSetErrorCallback(P3D::DisplayErrorCallback);
+		glfwSetErrorCallback(ErrorCallback);
 
 		// informa a definiçao
 		std::cout << "Error callBack setted...\n\n-> Starting GLFW Lib..." << std::endl;
@@ -76,7 +79,7 @@ namespace P3D
 	}
 
 	// define variaveis iniciais do OpenGL
-	void InitOpenGL(void) 
+	void InitOpenGL(void)
 	{
 		// define a cor a utilizar quando usado glClear
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -84,5 +87,39 @@ namespace P3D
 		glEnable(GL_DEPTH_TEST);
 		// activa o culling de faces
 		glEnable(GL_CULL_FACE);
+	}
+
+
+	// funçoes internas 
+	// funçao de callback para erros
+	void ErrorCallback(int error, const char* descripton) {
+		// imprime o erro
+		std::cout << "Error: " + error << " -> " << descripton << std::endl;
+	}
+
+	// funçao que inicia o estado do Gl
+	bool StartStateGl(P3D::WindowManager &manager)
+	{
+		if (!P3D::InitGLFW())
+			return 0;	// caso nao tenha iniciado correctamente, aborta
+
+		// cria uma nova janela
+		if (!manager.CreateWindow())
+			return 0; // caso nao tenha conseguido criar uma janela, termina
+
+		// define a janela como contexto actual
+		glfwMakeContextCurrent(manager.GetWindow());
+
+		// inicia o glew
+		if (!P3D::InitGLEW())
+			return 0;	// caso nao tenha iniciado correctamente, aborta
+
+		// inicia valores de OpenGL
+		P3D::InitOpenGL();
+		// imprime informaçao sobre o OpenGl em uso
+		P3D::PrintGlInformation();
+
+		// retorna que concluiu a preparaçao
+		return 1;
 	}
 }

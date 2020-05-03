@@ -27,9 +27,6 @@
     <ClCompile Include="LoadFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CallBacks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OpenGlStateFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,9 +34,6 @@
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CallBacksDeff.h">
-      <Filter>Header Files\FuncsHeaders</Filter>
     </ClInclude>
     <ClInclude Include="FileFuncs.h">
       <Filter>Header Files\FuncsHeaders</Filter>

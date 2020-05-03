@@ -4,7 +4,7 @@
 // namespace para o projecto
 namespace P3D
 {
-	class Material
+	class Material 
 	{
 	public:
 

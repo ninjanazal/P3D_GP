@@ -1,7 +1,20 @@
 // gestor de janelas e comportamento
 #pragma once
-#include "Object.h"
-#include "CallBacksDeff.h"
+// sao incluidas e definidas todas as librarias externas visto que todo o programa dependerá 
+// maioritariamente, occorendo aqui grande parte da transformaçao do mesmo
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glfw3.lib")
+#pragma comment(lib, "glew32s.lib")
+
+#define GLEW_STATIC
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
+
+#include <glm/gtc/matrix_transform.hpp> // translate, rotate, scale, perspective, ...
+#include <glm/gtc/type_ptr.hpp> // value_ptr
+#include <iostream>
+#include <string>
+
 
 // classe que comporta o comportamento e gestao de janelas
 namespace P3D
@@ -11,15 +24,16 @@ namespace P3D
 	public:
 		// metodos publicos
 		// construtor do gestor de janelas	
-		WindowManager(const char* name, unsigned int width, unsigned int height);
+		inline WindowManager(const char* name, unsigned int width, unsigned int height);
 		~WindowManager() {};	// destrutor
+
 		// funçoes da class
 		// funçao para iniciaçao de uma nova janela
-		bool CreateWindow();
+		inline bool CreateWindow();
 
 #pragma region Getters
 		// getter para a janela
-		GLFWwindow* GetWindow(void) { return this->render_window; };
+		inline GLFWwindow* GetWindow(void) { return this->render_window; };
 #pragma endregion
 
 	private:
@@ -40,10 +54,14 @@ namespace P3D
 		GLfloat mouse_zoom = 10.0f;	// zoom aplicado pelo scroll do rato
 		glm::vec2 mouse_input = glm::vec2(0.0f, 0.0f);
 #pragma endregion
+
+#pragma region Methods
+		// funçoes de callback de comportamento da janela
+#pragma endregion
 	};
 
 	// inicalizador do gestor de janelas
-	WindowManager::WindowManager(const char* window_name, unsigned int width, unsigned int height)
+	inline WindowManager::WindowManager(const char* window_name, unsigned int width, unsigned int height)
 	{
 		// guarda internamente os valores passados
 		this->window_name = window_name;	// guarda o nome a apresentar na janela
@@ -52,9 +70,8 @@ namespace P3D
 		// informa da criaçao da janela
 		std::cout << "Ready To create Window: " << this->window_name << std::endl;
 	}
-
 	// cria uma nova janela
-	bool WindowManager::CreateWindow(void)
+	inline bool WindowManager::CreateWindow(void)
 	{
 		// define uma nova janela
 		render_window = glfwCreateWindow(
@@ -74,4 +91,9 @@ namespace P3D
 		// retorna
 		return true;
 	}
+
+
+#pragma region runTimeCallBacks
+	
+#pragma endregion
 }

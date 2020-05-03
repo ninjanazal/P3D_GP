@@ -137,8 +137,7 @@ namespace P3D
 
 		// sabendo que apenas será renderizado um objecto, será utilizado apenas 1 VAO
 		// como tal, gera nome para o VAO do obj
-		glGenVertexArrays(GLuint(1), this->VAO_name);
-		
+		glGenVertexArrays(GLuint(1), this->VAO_name);		
 		// Bind ao VAO criado, nome alocado na VAO_name[0]. É activado o VAO ao dar bind
 		glBindVertexArray(this->VAO_name[0]);
 
