@@ -1,5 +1,6 @@
 #pragma once
 #include "WindowManager.h"
+#include "Object.h"
 
 // namespace P3D para comportamentos singulares
 namespace P3D
@@ -17,4 +18,8 @@ namespace P3D
 
 	// Funçao de preparaçao do estado do GL
 	bool StartStateGl(P3D::WindowManager& manager);
+	// Funçao de atribuiçao de valores uniformes
+	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj);
+	// Funçao de render do estado do GL
+	void DrawGL(P3D::WindowManager* manager, P3D::Object * obj);
 }

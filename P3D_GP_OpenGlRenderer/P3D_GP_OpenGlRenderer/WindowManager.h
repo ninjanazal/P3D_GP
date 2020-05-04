@@ -34,6 +34,10 @@ namespace P3D
 #pragma region Getters
 		// getter para a janela
 		inline GLFWwindow* GetWindow(void) { return this->render_window; };
+		// getter para matriz de projecçao
+		inline glm::mat4 GetProjectionMat(void) { return this->projection_matrix; };
+		// getter para a matriz de vista
+		inline glm::mat4 GetViewMat(void) { return this->view_matrix; };
 #pragma endregion
 
 	private:
@@ -45,14 +49,16 @@ namespace P3D
 
 		// GLF vars
 		GLFWwindow* render_window;	// referencia da janela
-#pragma endregion
 
+		// render Vars
+		glm::mat4 projection_matrix;	// matriz de projecçao
+		glm::mat4 view_matrix;	// matriz de vista
+#pragma endregion
 
 		// variaveis que resultam no input do utilizador
 #pragma region InputVars
 		// input vars
 		GLfloat mouse_zoom = 10.0f;	// zoom aplicado pelo scroll do rato
-		glm::vec2 mouse_input = glm::vec2(0.0f, 0.0f);
 #pragma endregion
 
 #pragma region Methods
@@ -61,8 +67,7 @@ namespace P3D
 	};
 
 	// inicalizador do gestor de janelas
-	inline WindowManager::WindowManager(const char* window_name, unsigned int width, unsigned int height)
-	{
+	inline WindowManager::WindowManager(const char* window_name, unsigned int width, unsigned int height) {
 		// guarda internamente os valores passados
 		this->window_name = window_name;	// guarda o nome a apresentar na janela
 		this->window_width = width;			// guarda a largura e altura da janela
@@ -71,15 +76,13 @@ namespace P3D
 		std::cout << "Ready To create Window: " << this->window_name << std::endl;
 	}
 	// cria uma nova janela
-	inline bool WindowManager::CreateWindow(void)
-	{
+	inline bool WindowManager::CreateWindow(void) {
 		// define uma nova janela
 		render_window = glfwCreateWindow(
 			this->window_width, this->window_height, this->window_name.c_str(), NULL, NULL);
 
 		// verifica se foi criada com sucesso
-		if (render_window == NULL)
-		{
+		if (render_window == NULL) {
 			// inprime que nao conseguiu criar a janela
 			std::cout << "Failed to create window: " << this->window_name << std::endl;
 			// retorna
@@ -88,15 +91,26 @@ namespace P3D
 		// define o viewPort
 		glViewport(0, 0, window_width, window_height);
 
+		// define a matriz de projecçao, fov 60º, near plane 0.1, far plane 500f
+		this->projection_matrix = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(this->window_width / this->window_height),
+			0.1f, 100.0f);
+
+		//define a matriz de vista inicial
+		this->view_matrix = glm::lookAt(
+			glm::vec3(0.0f, 0.0f, mouse_zoom),	// posiçao de vista
+			glm::vec3(0.0f, 0.0f, 0.0f),		// posiçao de look
+			glm::vec3(0.0f, 1.0f, 0.0)			// camera up
+		);
+
 		// se conseguiu criar a janela
 		// informa
-		std::cout << "Window created successfully!" << std::endl;
+		std::cout << "Window created successfully!\n-> " << window_width << " : " << window_height << std::endl;
 		// retorna
 		return true;
 	}
 
 
 #pragma region runTimeCallBacks
-	
+
 #pragma endregion
 }

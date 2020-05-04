@@ -86,7 +86,7 @@ namespace P3D
 		// activa o teste de profundidade
 		glEnable(GL_DEPTH_TEST);
 		// activa o culling de faces
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 	}
 
 
@@ -96,6 +96,7 @@ namespace P3D
 		// imprime o erro
 		std::cout << "Error: " + error << " -> " << descripton << std::endl;
 	}
+
 
 	// funçao que inicia o estado do Gl
 	bool StartStateGl(P3D::WindowManager &manager)
@@ -121,5 +122,36 @@ namespace P3D
 
 		// retorna que concluiu a preparaçao
 		return 1;
+	}
+
+	// liga valores uniformes
+	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj) {
+		// valores uniformes gerais
+		// ====== matriz MVP
+		// determina a matrix mvp
+		glm::mat4 mvp_matrix = manager->GetProjectionMat() * manager->GetViewMat() * obj->GetModelMat();
+		// obtem a localizaçao do atributo uniform "MVP"
+		GLint mvp_location = glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "MVP");
+		// com o nome atribui o valor
+		glProgramUniformMatrix4fv(obj->GetShaderProgram(), mvp_location, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	}
+
+	// funçao de draw do GL
+	void DrawGL(P3D::WindowManager *manager, P3D::Object *obj) {
+		// Funçao de Draw
+		// limpa os buffers de cor e de profundidade
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// update logico
+
+		// render Update
+		// desenha o objecto
+		obj->Drawobj();
+
+		// alterna os buffers
+		glfwSwapBuffers(manager->GetWindow());
+		// chama eventos de janela e input
+		glfwPollEvents();
 	}
 }

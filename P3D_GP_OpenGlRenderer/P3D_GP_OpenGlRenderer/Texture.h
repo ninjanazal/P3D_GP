@@ -26,12 +26,12 @@ namespace P3D
 	class Texture
 	{
 	public:
-		Texture(const char*, const char*);	// construtor da class, recebe, nome e directorio
-		~Texture() {};	// destrutor da class
+		inline Texture(const char*, const char*);	// construtor da class, recebe, nome e directorio
+		inline ~Texture() {};	// destrutor da class
 
 		// Funcs
 		// Carrega textura para buffer da GPU
-		void LoadTextureBuffer(void);
+		inline void LoadTextureBuffer(void);
 #pragma 
 
 	private:
@@ -45,7 +45,7 @@ namespace P3D
 	};
 
 	// construtor, recebe o nome da textura e o directorio
-	Texture::Texture(const char* tex_name, const char* dir)
+	inline Texture::Texture(const char* tex_name, const char* dir)
 	{
 		this->tex_name = tex_name;	// guarda o nome da textura
 		this->directory_ = dir;		// guarda o path para o directorio
@@ -55,7 +55,7 @@ namespace P3D
 	}
 
 	// Carregamento da textura para a GPU
-	void Texture::LoadTextureBuffer(void)
+	inline void Texture::LoadTextureBuffer(void)
 	{
 		// informa que a alocaçao da textura na gpu foi iniciada
 		std::cout << "Passing texture data to GPU..." << std::endl;

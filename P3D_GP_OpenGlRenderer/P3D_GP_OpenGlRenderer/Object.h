@@ -12,40 +12,44 @@ namespace P3D
 	{
 	public:
 		// csontrutores
-		Object(glm::vec3[], size_t);		// construtor da classe, para a criação de objectos directamente dos pontos definidos
-		Object(const char*);		// overload do construtor para receber um caminho para o objecto
+		inline Object(glm::vec3[], size_t);		// construtor da classe, para a criação de objectos directamente dos pontos definidos
+		inline Object(const char*);		// overload do construtor para receber um caminho para o objecto
 
-		~Object() { std::cout << "Objecto destruido" << std::endl; };	// destrutor da classe
+		inline ~Object() { std::cout << "Objecto destruido" << std::endl; };	// destrutor da classe
 
 		// funçoes do objecto
 		// Funçao que valida o objecto
-		bool Validate(void);
+		inline bool Validate(void);
 
 		// Buffers
 		// Funçao para gerar e carregar buffers
-		void LoadBuffers(void);
+		inline void LoadBuffers(void);
 
 		// Shader
 		// Funçao para carregar Shaders
-		bool LoadShaders(void);
+		inline bool LoadShaders(void);
 		// Função para atribuir valores ao shader
-		void ConnectShaderValues(void);
+		inline void ConnectShaderValues(void);
 
+		// desenho
+		inline void Drawobj(void);
 		// informaçao publica
 		P3D::Material* object_material;	// material do objecto
 
 		// getters
 #pragma region Getters
 		// getter para o vector de vertices
-		std::vector<glm::vec3> GetVertexs(void) { return this->vertex; };
+		std::vector<GLfloat> GetVertexs(void) { return this->array_Vert; };
 		// getter para o vector de normais
-		std::vector<glm::vec3> GetNormals(void) { return this->normals; };
+		std::vector<GLfloat> GetNormals(void) { return this->array_Norm; };
 		// getter para as coordenadas de textura
-		std::vector<glm::vec2> GetTexCoords(void) { return this->tex_coords; };
+		std::vector<GLfloat> GetTexCoords(void) { return this->array_tex_coord; };
 		// getter para o nome do objecto
 		std::string GetObjName(void) { return this->xyz_file; };
 		// getter para o nome do programa shader
 		GLuint GetShaderProgram(void) { return this->shader_program; };
+		// getter para a matriz de modelo
+		glm::mat4 GetModelMat(void) { return this->model_matrix; };
 #pragma endregion Getters
 
 	private:
@@ -56,23 +60,33 @@ namespace P3D
 		std::vector<glm::vec3> normals;		// normais dos vertices
 		std::vector<glm::vec2> tex_coords;	// coordenadas de textura
 
+		// vertices do objecto em vector unidirecional
+		std::vector<GLfloat> array_Vert, array_Norm, array_tex_coord;
+
+
+		// matriz de modelo
+		glm::mat4 model_matrix;	// matriz de modelo
+
 		// render information
 		GLuint VAO_name[1]{};	// nome atribuido ao VAO do objecto
 		GLuint Buffers_names[BUFFER_COUNT]{};	// array de nome de buffers (VBO)
 		// vertex -> 0 normals -> 1, tex_coord -> 2
 
-
+		// shader vars
 		GLuint shader_program = 0, vertex_shader_name = 0, fragment_shader_name = 0;	// nome do programa shader
 
 		// private Funcs
+		// converte vector de vec3 em arrays de Gfloat
+		inline std::vector<GLfloat> ConvertToFloatArray(const std::vector<glm::vec3> vector);
+		inline std::vector<GLfloat> Convert2ToFloatArray(const std::vector<glm::vec2> vector);
 		// carrega o vertex Shader
-		bool LoadVertexShader(void);
+		inline bool LoadVertexShader(void);
 		// carrega o Fragment Shader
-		bool LoadFragmentShader(void);
+		inline bool LoadFragmentShader(void);
 	};
 
 	// construtor que recebe um vector com os vertices e a quantidade de vertices
-	Object::Object(glm::vec3 vertexs[], size_t vertex_count)
+	inline Object::Object(glm::vec3 vertexs[], size_t vertex_count)
 	{
 		// inicializa o material vazio
 		object_material = new P3D::Material();
@@ -89,7 +103,7 @@ namespace P3D
 	}
 
 	// construtor que recebe um path para dar load no obj
-	Object::Object(const char* dir_)
+	inline Object::Object(const char* dir_)
 	{
 		// guarda o caminho para o directorio dos ficheiros
 		this->dir_path = dir_;
@@ -126,6 +140,14 @@ namespace P3D
 				std::cout << "Loaded:\n\t->Vertex: " << vertex.size() << "\n\t->Normals: " << normals.size() <<
 					"\n\t->Tex_Coords: " << tex_coords.size() << std::endl;
 
+				// guarda os vectores em arrays
+				this->array_Vert = ConvertToFloatArray(this->vertex);
+				this->array_Norm = ConvertToFloatArray(this->normals);
+				this->array_tex_coord = Convert2ToFloatArray(this->tex_coords);
+
+				// ao definir o objecto inicia a matriz de modelo, identidade
+				this->model_matrix = glm::mat4(1.0f);
+
 				// verifica se existe um material definido
 				if (!load_obj_mat.empty())
 				{
@@ -141,15 +163,14 @@ namespace P3D
 	}
 
 	// validate object
-	bool Object::Validate(void)
+	inline bool Object::Validate(void)
 	{
 		// avalia se existem vertices no objecto
 		return (vertex.size() > 0) ? true : false;
 	}
 
 	// Carrega buffers
-	void Object::LoadBuffers(void)
-	{
+	inline void Object::LoadBuffers(void) {
 		// imprime que o carregamento para buffers de gpu é iniciado
 		std::cout << "\n\n=====> Start Loading GPU buffers..." << std::endl;
 
@@ -170,17 +191,17 @@ namespace P3D
 		// vertices, inicia VBO, GL_ARRAY_BUFFER para atributos vertices com o nome atribuido
 		glBindBuffer(GL_ARRAY_BUFFER, this->Buffers_names[0]);
 		// atribui valor dos vertices para o VBO[0]
-		glBufferStorage(GL_ARRAY_BUFFER, sizeof(glm::vec3) * this->vertex.size(), this->vertex.data(), 0);
+		glBufferStorage(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->array_Vert.size(), &this->array_Vert[0], 0);
 
 		// normais, iniciar VBO, para atributos das normormais com o nome atribuido
 		glBindBuffer(GL_ARRAY_BUFFER, this->Buffers_names[1]);
 		// atribui valor das normais para o buffer vinculado
-		glBufferStorage(GL_ARRAY_BUFFER, sizeof(glm::vec3) * this->normals.size(), this->normals.data(), 0);
+		glBufferStorage(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->array_Norm.size(), this->array_Norm.data(), 0);
 
 		// tex_coords, iniciar VBO para atributos das coordenadas de textura
 		glBindBuffer(GL_ARRAY_BUFFER, this->Buffers_names[2]);
 		// atribui valor das coordenadas de textura para o buffer vinculado
-		glBufferStorage(GL_ARRAY_BUFFER, sizeof(glm::vec2) * this->tex_coords.size(), this->tex_coords.data(), 0);
+		glBufferStorage(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->array_tex_coord.size(), this->array_tex_coord.data(), 0);
 
 		// chama o bind da textura
 		this->object_material->material_texture->LoadTextureBuffer();
@@ -190,7 +211,7 @@ namespace P3D
 	}
 
 	// Carrega Shaders
-	bool Object::LoadShaders(void)
+	inline bool Object::LoadShaders(void)
 	{
 		// indica que começou a carregar os ficheiros de shader
 		std::cout << "\n\n=====> Start loading Shader Programs..." << std::endl;
@@ -251,9 +272,93 @@ namespace P3D
 		// retorna que o carregamento foi feito com sucesso
 		return true;
 	}
+
+	// liga atributos ao shader
+	inline void Object::ConnectShaderValues(void) {
+		// indica que é iniciado a vinculaçao dos dados
+		std::cout << "Connecting buffer values to shader properties!" << std::endl;
+
+		// existindo apenas um vao, nao é necessario vincular esse vai, no entnao pode ser feito
+		glBindVertexArray(this->VAO_name[0]);
+		// vertices
+		// vincula o vbo 0 , para atribuiçao das posiçoes de vertices
+		// obtem a localizaçao do atributo "vPosition" no programa
+		GLint vPosition_location =
+			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vPosition");
+		// com a poisçao do atributo, é definido como os valores sao interpretados
+		glVertexAttribPointer(vPosition_location, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		// activa o atributo
+		glEnableVertexAttribArray(vPosition_location);
+
+		// normais
+		// vincula o vbo 1, para atribuiçao dos valores de normais
+		// obtem a localozaçao do atributo "vNormals" no programa
+		GLint vNormals_location =
+			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vNormals");
+		// com a +posiçao do atributo, é definido como os valores sao interpretados
+		glVertexAttribPointer(vNormals_location, 3, GL_FLOAT, GL_TRUE, 0, nullptr);
+		// activa o atributo
+		glEnableVertexAttribArray(vNormals_location);
+
+		// coordenadas de textura
+		// vincula o vbo 2, para atribuiçao das coordenadas de textura
+		// obtem a localizaçao do atributo "vTex_Coords" no programa
+		GLint vTex_Coords_location =
+			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vTex_Coords");
+		// com a posiçao do atributo, é definido como os valores sao interpretados
+		glVertexAttribPointer(vTex_Coords_location, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		// activa o atributo
+		glEnableVertexAttribArray(vTex_Coords_location);
+
+		// TODO
+		// atribuir textura 
+
+		// indica que os atributos foram definidos com sucesso
+		std::cout << "Buffers Connected!" << std::endl;
+	}
+
+	// vincula o vao do obj
+	inline void Object::Drawobj(void) {
+		// vincula o vao do objecto
+		glBindVertexArray(this->VAO_name[0]);
+
+		// envia o comando de desenho das primitivas utilizando o vao vinculado
+		glDrawArrays(GL_TRIANGLES, 0, this->vertex.size());
+	}
+
+#pragma region PrivateMethods
 	// Metodos privados
+
+	// converte vectores em arrays
+	inline std::vector<GLfloat> Object::ConvertToFloatArray(const std::vector<glm::vec3> vector) {
+		// cria um array temporario de retorno
+		std::vector<GLfloat> tempArray;
+
+		// para cada uma das posiçoes do vector
+		for (int i = 0; i < vector.size(); i++) {
+			tempArray.push_back(vector[i].x);	// adiciona x
+			tempArray.push_back(vector[i].y);	// adiciona y
+			tempArray.push_back(vector[i].z);	// adiciona z
+		}
+		// retorna o array
+		return tempArray;
+	}
+	// converte vertor2 para arry
+	inline std::vector<GLfloat> Object::Convert2ToFloatArray(const std::vector<glm::vec2> vector) {
+		// cria um array temporario de retorno
+		std::vector<GLfloat>  tempArray;
+
+		// para cada uma das posiçoes do vector
+		for (int i = 0; i < vector.size(); i++) {
+			tempArray.push_back(vector[i].x);	// adiciona x
+			tempArray.push_back(vector[i].y);	// adiciona y
+		}
+		// retorna o array
+		return tempArray;
+	}
+
 	// carrega o vertex shader
-	bool Object::LoadVertexShader(void) {
+	inline bool Object::LoadVertexShader(void) {
 		// cria um vertex shader e retorna o seu nome
 		vertex_shader_name = glCreateShader(GL_VERTEX_SHADER);
 		// efectua a leitura dos dados presentes no shader, guarda o shader numa var temp
@@ -317,7 +422,7 @@ namespace P3D
 	}
 
 	// carrega o Fragment shader
-	bool Object::LoadFragmentShader(void) {
+	inline bool Object::LoadFragmentShader(void) {
 		// cria um fragment shader e retorna o seu nome
 		fragment_shader_name = glCreateShader(GL_FRAGMENT_SHADER);
 		// efectua a leitura dos dados presentes no shader, guarda o shader numa var temp
@@ -378,47 +483,5 @@ namespace P3D
 		std::cout << "Fragment Shader loaded Successfully!" << std::endl;
 	}
 
-	// liga atributos ao shader
-	void Object::ConnectShaderValues(void) {
-		// indica que é iniciado a vinculaçao dos dados
-		std::cout << "Connecting buffer values to shader properties!" << std::endl;
-
-		// existindo apenas um vao, nao é necessario vincular esse vai, no entnao pode ser feito
-		glBindVertexArray(this->VAO_name[0]);
-		// vertices
-		// vincula o vbo 0 , para atribuiçao das posiçoes de vertices
-		// obtem a localizaçao do atributo "vPosition" no programa
-		GLint vPosition_location =
-			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vPosition");
-		// com a poisçao do atributo, é definido como os valores sao interpretados
-		glVertexAttribPointer(vPosition_location, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-		// activa o atributo
-		glEnableVertexAttribArray(vPosition_location);
-
-		// normais
-		// vincula o vbo 1, para atribuiçao dos valores de normais
-		// obtem a localozaçao do atributo "vNormals" no programa
-		GLint vNormals_location =
-			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vNormals");
-		// com a +posiçao do atributo, é definido como os valores sao interpretados
-		glVertexAttribPointer(vNormals_location, 3, GL_FLOAT, GL_TRUE, 0, nullptr);
-		// activa o atributo
-		glEnableVertexAttribArray(vNormals_location);
-
-		// coordenadas de textura
-		// vincula o vbo 2, para atribuiçao das coordenadas de textura
-		// obtem a localizaçao do atributo "vTex_Coords" no programa
-		GLint vTex_Coords_location =
-			glGetProgramResourceLocation(shader_program, GL_PROGRAM_INPUT, "vTex_Coords");
-		// com a posiçao do atributo, é definido como os valores sao interpretados
-		glVertexAttribPointer(vTex_Coords_location, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
-		// activa o atributo
-		glEnableVertexAttribArray(vTex_Coords_location);
-
-		// TODO
-		// atribuir textura 
-
-		// indica que os atributos foram definidos com sucesso
-		std::cout << "Buffers Connected!" << std::endl;
-	}
+#pragma endregion
 }

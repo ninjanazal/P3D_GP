@@ -8,9 +8,9 @@ namespace P3D
 	{
 	public:
 
-		Material() {};	// construtor semp parametros
-		Material(const char*, const char*);	// construtor, recebe o nome do material e o directorio
-		~Material();	// destrutor da classe
+		inline Material() {};	// construtor semp parametros
+		inline Material(const char*, const char*);	// construtor, recebe o nome do material e o directorio
+		inline ~Material();	// destrutor da classe
 
 		// informaçao publica
 		// informaçao da textura
@@ -18,10 +18,10 @@ namespace P3D
 
 
 #pragma region Getters
-		std::string GetMaterialName(void) { return mat_name; };	// retorna o nome do objecto
-		glm::vec3 GetMaterialAmbienteVal(void) { return coeficients[0]; };	// retorna o valor do coeficiente reflexao ambiente
-		glm::vec3 GetMaterialDifuseVal(void) { return coeficients[1]; };	// retorna o valor de coeficiente reflexao difusa
-		glm::vec3 GetMaterialSpecularVal(void) { return coeficients[2]; };	// retorna o valor de coeficiente reflexao especular
+		inline std::string GetMaterialName(void) { return mat_name; };	// retorna o nome do objecto
+		inline glm::vec3 GetMaterialAmbienteVal(void) { return coeficients[0]; };	// retorna o valor do coeficiente reflexao ambiente
+		inline glm::vec3 GetMaterialDifuseVal(void) { return coeficients[1]; };	// retorna o valor de coeficiente reflexao difusa
+		inline glm::vec3 GetMaterialSpecularVal(void) { return coeficients[2]; };	// retorna o valor de coeficiente reflexao especular
 
 		GLfloat GetSpecularExponentialVal(void) { return specular_exponential; };	// retorna valor de expoente especular
 #pragma endregion Getters
@@ -34,11 +34,11 @@ namespace P3D
 
 
 		// metodos privados
-		void PrintInfo();	// imprime dados do material
+		inline inline void PrintInfo();	// imprime dados do material
 	};
 
 	// construtor de class Material, recebe nome e directorio do material
-	Material::Material(const char* MatName, const char* dir)
+	inline Material::Material(const char* MatName, const char* dir)
 	{
 		this->mat_name = MatName;	// guarda o nome do material	
 		this->directory_ = dir;		// guarda o caminho para o directorio
@@ -72,14 +72,14 @@ namespace P3D
 		}
 	}
 
-	Material::~Material()
+	inline Material::~Material()
 	{
 	}
 
 
 #pragma region PrivateMethods
 	// imprime informaçoes do material
-	void Material::PrintInfo()
+	inline void Material::PrintInfo()
 	{
 		// imprime dados do material
 		std::cout << "\n\n\t*** Material Info ***\nMaterial -> " << mat_name << std::endl;	// imprime o nome

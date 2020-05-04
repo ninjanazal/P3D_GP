@@ -10,5 +10,5 @@ layout(location = 0)out vec4 fColor;	// cor de saida do fragmento
 void main()
 {
 	// coloca todos os fragmentos com a cor branca
-	fColor = vec4(1.9f,1.0f,1.0f,1.0f);
+	fColor = vec4(v2f_Normals.x,v2f_Normals.y,v2f_Normals.z,1.0f);
 }

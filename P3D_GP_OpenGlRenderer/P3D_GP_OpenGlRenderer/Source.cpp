@@ -93,6 +93,8 @@ int main(void)
 
 	// liga os atributos ás propriedades do shader
 	obj_to_render_->ConnectShaderValues();
+	// liga atributos uniformes
+	P3D::ConnectUniformValues(window_manager_, obj_to_render_);
 
 	// informa que o ciclo de render foi iniciado
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
@@ -100,18 +102,8 @@ int main(void)
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
 	{
-		// limpa os buffers de cor e de profundidade
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// update logico
-
-		// render Update
-
-
-		// alterna os buffers
-		glfwSwapBuffers(window_manager_->GetWindow());
-		// chama eventos de janela e input
-		glfwPollEvents();
+		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
+		P3D::DrawGL(window_manager_,obj_to_render_);
 	}
 
 	// termina o espaço glfw, destroi janelas e cursores ainda abertos
