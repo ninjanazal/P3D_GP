@@ -82,7 +82,7 @@ namespace P3D
 	void InitOpenGL(void)
 	{
 		// define a cor a utilizar quando usado glClear
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		// activa o teste de profundidade
 		glEnable(GL_DEPTH_TEST);
 		// activa o culling de faces
@@ -135,6 +135,8 @@ namespace P3D
 		// com o nome atribui o valor
 		glProgramUniformMatrix4fv(obj->GetShaderProgram(), mvp_location, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
+		// valor de tempo de jogo, 
+		GLfloat total_time = glfwGetTime();
 	}
 
 	// funçao de draw do GL

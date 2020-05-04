@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Obj">
       <UniqueIdentifier>{69dca17a-44f5-4b87-a07f-217b3c011ee6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Obj">
+      <UniqueIdentifier>{668c465b-9334-4bb8-801e-6086e4d51a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WindowManager">
+      <UniqueIdentifier>{cb51b5b4-4aee-4f87-9fe0-a88c56a98701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -29,6 +35,12 @@
     </ClCompile>
     <ClCompile Include="OpenGlStateFuncs.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Source Files\WindowManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

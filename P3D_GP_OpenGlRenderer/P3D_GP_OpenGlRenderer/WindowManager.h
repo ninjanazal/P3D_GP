@@ -1,5 +1,6 @@
 // gestor de janelas e comportamento
-#pragma once
+#ifndef WINDOWMANAGER_H
+#define WINDOWMANAGER_H
 // sao incluidas e definidas todas as librarias externas visto que todo o programa dependerá 
 // maioritariamente, occorendo aqui grande parte da transformaçao do mesmo
 #pragma comment(lib, "opengl32.lib")
@@ -24,20 +25,20 @@ namespace P3D
 	public:
 		// metodos publicos
 		// construtor do gestor de janelas	
-		inline WindowManager(const char* name, unsigned int width, unsigned int height);
+		WindowManager(const char* name, unsigned int width, unsigned int height);
 		~WindowManager() {};	// destrutor
 
 		// funçoes da class
 		// funçao para iniciaçao de uma nova janela
-		inline bool CreateWindow();
+		bool CreateWindow();
 
 #pragma region Getters
 		// getter para a janela
-		inline GLFWwindow* GetWindow(void) { return this->render_window; };
+		GLFWwindow* GetWindow(void) { return this->render_window; };
 		// getter para matriz de projecçao
-		inline glm::mat4 GetProjectionMat(void) { return this->projection_matrix; };
+		glm::mat4 GetProjectionMat(void) { return this->projection_matrix; };
 		// getter para a matriz de vista
-		inline glm::mat4 GetViewMat(void) { return this->view_matrix; };
+		glm::mat4 GetViewMat(void) { return this->view_matrix; };
 #pragma endregion
 
 	private:
@@ -58,7 +59,7 @@ namespace P3D
 		// variaveis que resultam no input do utilizador
 #pragma region InputVars
 		// input vars
-		GLfloat mouse_zoom = 10.0f;	// zoom aplicado pelo scroll do rato
+		GLfloat mouse_zoom = 5.0f;	// zoom aplicado pelo scroll do rato
 #pragma endregion
 
 #pragma region Methods
@@ -66,51 +67,5 @@ namespace P3D
 #pragma endregion
 	};
 
-	// inicalizador do gestor de janelas
-	inline WindowManager::WindowManager(const char* window_name, unsigned int width, unsigned int height) {
-		// guarda internamente os valores passados
-		this->window_name = window_name;	// guarda o nome a apresentar na janela
-		this->window_width = width;			// guarda a largura e altura da janela
-		this->window_height = height;
-		// informa da criaçao da janela
-		std::cout << "Ready To create Window: " << this->window_name << std::endl;
-	}
-	// cria uma nova janela
-	inline bool WindowManager::CreateWindow(void) {
-		// define uma nova janela
-		render_window = glfwCreateWindow(
-			this->window_width, this->window_height, this->window_name.c_str(), NULL, NULL);
-
-		// verifica se foi criada com sucesso
-		if (render_window == NULL) {
-			// inprime que nao conseguiu criar a janela
-			std::cout << "Failed to create window: " << this->window_name << std::endl;
-			// retorna
-			return false;
-		}
-		// define o viewPort
-		glViewport(0, 0, window_width, window_height);
-
-		// define a matriz de projecçao, fov 60º, near plane 0.1, far plane 500f
-		this->projection_matrix = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(this->window_width / this->window_height),
-			0.1f, 100.0f);
-
-		//define a matriz de vista inicial
-		this->view_matrix = glm::lookAt(
-			glm::vec3(0.0f, 0.0f, mouse_zoom),	// posiçao de vista
-			glm::vec3(0.0f, 0.0f, 0.0f),		// posiçao de look
-			glm::vec3(0.0f, 1.0f, 0.0)			// camera up
-		);
-
-		// se conseguiu criar a janela
-		// informa
-		std::cout << "Window created successfully!\n-> " << window_width << " : " << window_height << std::endl;
-		// retorna
-		return true;
-	}
-
-
-#pragma region runTimeCallBacks
-
-#pragma endregion
 }
+#endif

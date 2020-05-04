@@ -41,8 +41,6 @@ carregado. Esta deformação deverá variar em função do tempo.
 */
 
 // includes
-#include "Object.h"
-#include "Windowmanager.h"
 #include "OpenGlState.h"
 
 // define o tamanho da janela de visualizaçao
