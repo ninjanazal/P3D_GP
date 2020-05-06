@@ -25,6 +25,9 @@
     <Filter Include="Source Files\WindowManager">
       <UniqueIdentifier>{cb51b5b4-4aee-4f87-9fe0-a88c56a98701}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Obj\stb_image">
+      <UniqueIdentifier>{e448b55e-d68e-4474-8c23-90b940cb4df1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -41,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="WindowManager.cpp">
       <Filter>Source Files\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files\Obj\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

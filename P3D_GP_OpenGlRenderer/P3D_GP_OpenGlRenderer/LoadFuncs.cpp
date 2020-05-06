@@ -191,14 +191,30 @@ namespace P3D
 	}
 
 	// leitura do ficheiro de textura
-	void LoadTextureValues(const char* file_path)
+	unsigned char* LoadTextureValues(const char* file_path,
+		GLint& tex_width, GLint& tex_height, GLint& tex_chan)
 	{
 		// Mostra tamano do ficheiro
 		ShowTgaFileSize(file_path);
 
-		// TODO
-		// descompressao e leitura dos dados da textura, provavelmente utilizado uma lib
-		// stb_image.h ????'		
+		// incia a leitura da imagem utilizando a lib stb_image
+		// informa
+		std::cout << "Start loading texture file..." << std::endl;
+
+		// define a leitura da imagem verticalmente, para que a interpretaçao seja igual ao OpenGl
+		stbi_set_flip_vertically_on_load(true);
+
+		// guarda a informaçao retornada num buffer interno
+		unsigned char* data_to = (unsigned char*)stbi_load(file_path, &tex_width, &tex_height, &tex_chan, 0);
+
+		// informa que a textura foi carregada
+		if (data_to != NULL) {
+			// se existir dados de imagem imprime
+			std::cout << "|--> Image loded successfully!\n|---->Image Size: " <<
+				tex_width << " x " <<   tex_height << " ::: channels: " << tex_chan << std::endl;
+		}
+		// retorna os dados
+		return data_to;
 	}
 
 	// leitura de valores de shader

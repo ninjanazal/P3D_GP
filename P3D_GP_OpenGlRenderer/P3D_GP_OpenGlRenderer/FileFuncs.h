@@ -4,6 +4,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#define GLEW_STATIC
+#include <GL\glew.h>
+
+#include "stb_image.h"	// include para ler ficheiros de textura
 
 #include <glm/glm.hpp> // vec3, vec4, ivec4, mat4, ...
 
@@ -17,7 +21,7 @@ namespace P3D
 	// Funçao de leitura de dados para estruturas internas do materias, retorna o nome da imagem de textura se definida
 	std::string LoadObjMaterialValues(const char* file_path, glm::vec3 (&coef)[3], float&specular);
 	// Funçao de leitura de dados de textura (.tga)
-	void LoadTextureValues(const char* file_path);
+	unsigned char* LoadTextureValues(const char* file_path, GLint& tex_width, GLint& tex_height, GLint& tex_chan);
 
 	// shader
 	// Funçao de leitura de ficheiro binario

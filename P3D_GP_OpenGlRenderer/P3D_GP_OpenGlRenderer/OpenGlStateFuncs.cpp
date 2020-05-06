@@ -131,12 +131,14 @@ namespace P3D
 		// determina a matrix mvp
 		glm::mat4 mvp_matrix = manager->GetProjectionMat() * manager->GetViewMat() * obj->GetModelMat();
 		// obtem a localizaçao do atributo uniform "MVP"
-		GLint mvp_location = glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "MVP");
+		GLint mvp_location = glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "_MVP");
 		// com o nome atribui o valor
 		glProgramUniformMatrix4fv(obj->GetShaderProgram(), mvp_location, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
 		// valor de tempo de jogo, 
 		GLfloat total_time = glfwGetTime();
+		// atribui ao uniform _TIME, o tempo de execuçao total do GL
+		glProgramUniform1f(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_TIME"), total_time);
 	}
 
 	// funçao de draw do GL

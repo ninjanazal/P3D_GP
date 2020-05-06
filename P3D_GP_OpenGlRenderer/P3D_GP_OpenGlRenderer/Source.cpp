@@ -80,7 +80,7 @@ int main(void)
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		// inicia o estado do GL
+	// inicia o estado do GL
 	P3D::StartStateGl(*window_manager_);
 
 
@@ -100,6 +100,9 @@ int main(void)
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
 	{
+		// actualiza uniforms
+		P3D::ConnectUniformValues(window_manager_, obj_to_render_);
+
 		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
 		P3D::DrawGL(window_manager_,obj_to_render_);
 	}

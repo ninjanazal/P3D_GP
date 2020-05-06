@@ -1,6 +1,6 @@
 #include "Object.h"
 
-namespace P3D{
+namespace P3D {
 	// construtor que recebe um path para dar load no obj
 	Object::Object(const char* dir_)
 	{
@@ -215,6 +215,7 @@ namespace P3D{
 
 		// TODO
 		// atribuir textura 
+		this->object_material->material_texture->ConnectTextureShaderValue(this->shader_program);
 
 		// indica que os atributos foram definidos com sucesso
 		std::cout << "Buffers Connected!" << std::endl;

@@ -1,7 +1,7 @@
 #version 440 core
 // uniforms
-layout(location = 0) uniform mat4 MVP;		// matriz mpv
-layout(location = 1) uniform float TIME;	// Valor do tempo
+layout(location = 0) uniform mat4 _MVP;		// matriz mpv
+layout(location = 1) uniform float _TIME;	// Valor do tempo
 
 // Atributos
 // objectivo
@@ -17,7 +17,7 @@ layout(location = 1) out vec2 v2f_Tex_Coords;	// valor das coordenadas de textur
 void main()
 {
 	// determina a posiçao de clip dos vertices
-	gl_Position = MVP * vec4(vPosition,1f);
+	gl_Position = _MVP * vec4(vPosition,1f);
 	// passa para saida o valor das coordenadas de textura
 	v2f_Normals = vNormals;	// guarda no valor de saida as normais
 	v2f_Tex_Coords = vTex_Coords;	// guarda no valor de saida as coordenadas de textura
