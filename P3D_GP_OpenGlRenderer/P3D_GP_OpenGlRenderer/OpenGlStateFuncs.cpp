@@ -108,6 +108,9 @@ namespace P3D
 		if (!manager.CreateWindow())
 			return 0; // caso nao tenha conseguido criar uma janela, termina
 
+		// define como é aplicado o modo de imput do rato
+		glfwSetInputMode(manager.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 		// define a janela como contexto actual
 		glfwMakeContextCurrent(manager.GetWindow());
 
@@ -148,6 +151,7 @@ namespace P3D
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// update logico
+		P3D::ConnectUniformValues(manager, obj);
 
 		// render Update
 		// desenha o objecto

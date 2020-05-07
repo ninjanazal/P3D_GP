@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Obj\stb_image">
       <UniqueIdentifier>{e448b55e-d68e-4474-8c23-90b940cb4df1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\InputHeader">
+      <UniqueIdentifier>{4914a8f8-2b71-494a-8fb3-5094f5c61319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inputs">
+      <UniqueIdentifier>{6dbb050e-53ca-4bd5-86a6-7b6bcac7d97e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">

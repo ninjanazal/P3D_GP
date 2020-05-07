@@ -4,22 +4,22 @@
 
 /*
 Fase 1[5 valores]:
-• Implementar a gestão de janelas e interface com o utilizador através da biblioteca GLFW;
-• Implementar a manipulação de matrizes e vetores através da biblioteca GLM;
+(done) • Implementar a gestão de janelas e interface com o utilizador através da biblioteca GLFW;
+(done) • Implementar a manipulação de matrizes e vetores através da biblioteca GLM;				
 •(2) Implementar a renderização de um cubo através da biblioteca OpenGL(incluindo a GLEW);
 •(2) A coloração dos fragmentos do cubo deve ser realizada de modo a que cada face apresente uma cor
 	distinta(nota que não é esperado que nesta fase estejam implementados os efeitos de iluminação);
-• A aplicação deverá permitir ao utilizador realizar zoom através da scroll wheel do rato;
+ • A aplicação deverá permitir ao utilizador realizar zoom através da scroll wheel do rato;
 • A aplicação deverá permitir navegar, em torno do modelo 3D, através de movimentos do rato.
 
 Fase 2 [6 valores]:
 • Os alunos deverão desenvolver uma biblioteca C++ capaz de:
-o Carregar os dados de posição dos vértices, normais, e coordenadas de textura do ficheiro .xyz;
-o Enviar para a memória de GPU (VAO e respetivos VBOs) os dados dos vértices;
-o Identificar no ficheiro .xyz o nome do ficheiro .mtl;
-o Carregar as propriedades do material (ficheiro .mtl), incluindo a imagem de textura;
-o Carregar a imagem de textura para uma unidade de textura do OpenGL;
-o Disponibilizar função para renderização do objeto.
+(done) o Carregar os dados de posição dos vértices, normais, e coordenadas de textura do ficheiro .xyz;
+(done) o Enviar para a memória de GPU (VAO e respetivos VBOs) os dados dos vértices;
+(done) o Identificar no ficheiro .xyz o nome do ficheiro .mtl;
+(done) o Carregar as propriedades do material (ficheiro .mtl), incluindo a imagem de textura;
+(done) o Carregar a imagem de textura para uma unidade de textura do OpenGL;
+(done) o Disponibilizar função para renderização do objeto.
 • A aplicação deverá fazer uso dessa biblioteca C++ para carregar e renderizar o modelo 3D fornecido;
 
 - Fase 3 [6 valores]:
@@ -83,7 +83,6 @@ int main(void)
 	// inicia o estado do GL
 	P3D::StartStateGl(*window_manager_);
 
-
 	// carrega objecto para memoria grafica
 	obj_to_render_->LoadBuffers();	
 	// carrega shaders para GPU
@@ -100,9 +99,6 @@ int main(void)
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
 	{
-		// actualiza uniforms
-		P3D::ConnectUniformValues(window_manager_, obj_to_render_);
-
 		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
 		P3D::DrawGL(window_manager_,obj_to_render_);
 	}

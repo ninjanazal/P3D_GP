@@ -27,14 +27,13 @@ namespace P3D
 	{
 	public:
 		Texture(const char*, const char*);	// construtor da class, recebe, nome e directorio
-		~Texture() {};	// destrutor da class
+		~Texture();	// destrutor da class
 
 		// Funcs
 		// Carrega textura para buffer da GPU
 		void LoadTextureBuffer(void);
 		// liga ao shader o atributo da textura
 		void ConnectTextureShaderValue(GLint program);
-#pragma 
 
 	private:
 		// informaçao da textura
