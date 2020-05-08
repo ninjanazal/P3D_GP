@@ -5,7 +5,7 @@
 /*
 Fase 1[5 valores]:
 (done) • Implementar a gestão de janelas e interface com o utilizador através da biblioteca GLFW;
-(done) • Implementar a manipulação de matrizes e vetores através da biblioteca GLM;				
+(done) • Implementar a manipulação de matrizes e vetores através da biblioteca GLM;
 •(2) Implementar a renderização de um cubo através da biblioteca OpenGL(incluindo a GLEW);
 •(2) A coloração dos fragmentos do cubo deve ser realizada de modo a que cada face apresente uma cor
 	distinta(nota que não é esperado que nesta fase estejam implementados os efeitos de iluminação);
@@ -42,6 +42,7 @@ carregado. Esta deformação deverá variar em função do tempo.
 
 // includes
 #include "OpenGlState.h"
+#include "InputController.h"
 
 // define o tamanho da janela de visualizaçao
 #define WINDOW_WIDTH 800
@@ -56,6 +57,7 @@ int main(void)
 	// definição de objectos
 	P3D::Object* obj_to_render_;	// define um novo objecto
 	P3D::WindowManager* window_manager_;	// controlador de janelas
+	P3D::InputController* input_controller;	// controlador de input
 
 	// leitura do ficheiro
 	char obj_path[256];	// caminha para o directorio
@@ -71,25 +73,31 @@ int main(void)
 
 	// inicia a criaçao de um objecto
 	obj_to_render_ = new P3D::Object(obj_path);
-
 	// confirma se o objecto foi carregado com sucesso
 	if (!obj_to_render_->Validate())
 		return -1; // caso nao existam vertices carregados, aborta o render
+
 
 	// inicia uma nova janela
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	// define o controlador de intpu
+	input_controller = new P3D::InputController(window_manager_, obj_to_render_);
+
 	// inicia o estado do GL
 	P3D::StartStateGl(*window_manager_);
 
-	// carrega objecto para memoria grafica
-	obj_to_render_->LoadBuffers();	
-	// carrega shaders para GPU
-	if(!obj_to_render_->LoadShaders()) return 0;
+	// define os callbacks para o input
+	input_controller->SetCallbacksFuncs();
 
+	// carrega objecto para memoria grafica
+	obj_to_render_->LoadBuffers();
+	// carrega shaders para GPU
+	if (!obj_to_render_->LoadShaders()) return 0;
 	// liga os atributos ás propriedades do shader
 	obj_to_render_->ConnectShaderValues();
+
 	// liga atributos uniformes
 	P3D::ConnectUniformValues(window_manager_, obj_to_render_);
 
@@ -97,15 +105,19 @@ int main(void)
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
 
 	// ciclo de render
-	while (!glfwWindowShouldClose(window_manager_->GetWindow()))
-	{
+	while (!glfwWindowShouldClose(window_manager_->GetWindow())) {
+		// update para valores de input
+		input_controller->Update();
+
+		// actualiza os valores dos uniforms
+		P3D::ConnectUniformValues(window_manager_, obj_to_render_);
+
 		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
-		P3D::DrawGL(window_manager_,obj_to_render_);
+		P3D::DrawGL(window_manager_, obj_to_render_);
 	}
 
 	// termina o espaço glfw, destroi janelas e cursores ainda abertos
 	P3D::CloseGL();
-
 	// aguarda o input
 	// ignora e limpa buffer de entrada actual
 	std::cin.clear(); std::cin.ignore();

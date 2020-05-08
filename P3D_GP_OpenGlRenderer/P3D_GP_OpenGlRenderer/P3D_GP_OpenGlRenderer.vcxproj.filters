@@ -25,14 +25,14 @@
     <Filter Include="Source Files\WindowManager">
       <UniqueIdentifier>{cb51b5b4-4aee-4f87-9fe0-a88c56a98701}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Obj\stb_image">
+    <Filter Include="Resource Files\stb_image">
       <UniqueIdentifier>{e448b55e-d68e-4474-8c23-90b940cb4df1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\InputHeader">
-      <UniqueIdentifier>{4914a8f8-2b71-494a-8fb3-5094f5c61319}</UniqueIdentifier>
+    <Filter Include="Source Files\InputController">
+      <UniqueIdentifier>{27fbefb5-2667-4f18-9ca4-5a3a5f50465e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Inputs">
-      <UniqueIdentifier>{6dbb050e-53ca-4bd5-86a6-7b6bcac7d97e}</UniqueIdentifier>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{5c7b49e6-856b-42d3-ada7-ae97217f10cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +52,16 @@
       <Filter>Source Files\WindowManager</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
-      <Filter>Source Files\Obj\stb_image</Filter>
+      <Filter>Resource Files\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Source Files\Obj</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Source Files\InputController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="LoadFuncs.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileFuncs.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OpenGlState.h" />

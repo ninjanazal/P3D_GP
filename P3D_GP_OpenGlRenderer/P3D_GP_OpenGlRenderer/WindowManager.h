@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 
+#define SCROLL_SPEED 0.5
+#define ROTATION_SPEED 1
 
 // classe que comporta o comportamento e gestao de janelas
 namespace P3D
@@ -27,10 +29,20 @@ namespace P3D
 		// construtor do gestor de janelas	
 		WindowManager(const char* name, unsigned int width, unsigned int height);
 		~WindowManager() {};	// destrutor
-
+				
 		// funçoes da class
 		// funçao para iniciaçao de uma nova janela
 		bool CreateWindow();
+
+#pragma region CallBackHandlers
+		// define os handler para InputCallbacks
+		// scrool de rato (Handler)
+		void ScrollInputHandler(double yoffset);
+		// input do rato
+		// roda a camera em torno do alvo(Handler)
+		void RotateCameraAroundHandler(float xValue, float yvalue);
+#pragma endregion -> CallBackHandlers
+
 
 #pragma region Getters
 		// getter para a janela
@@ -39,7 +51,8 @@ namespace P3D
 		glm::mat4 GetProjectionMat(void) { return this->projection_matrix; };
 		// getter para a matriz de vista
 		glm::mat4 GetViewMat(void) { return this->view_matrix; };
-#pragma endregion
+#pragma endregion -> Getters
+
 
 	private:
 		// variaveis relativas á class
@@ -52,20 +65,18 @@ namespace P3D
 		GLFWwindow* render_window;	// referencia da janela
 
 		// render Vars
-		glm::mat4 projection_matrix;	// matriz de projecçao
-		glm::mat4 view_matrix;	// matriz de vista
-#pragma endregion
+		glm::mat4 projection_matrix = glm::mat4(1.0f);	// matriz de projecçao
+		glm::mat4 view_matrix = glm::mat4(1.0f);	// matriz de vista
+#pragma endregion -> InternalVars
 
 		// variaveis que resultam no input do utilizador
 #pragma region InputVars
 		// input vars
 		GLfloat mouse_zoom = 5.0f;	// zoom aplicado pelo scroll do rato
-#pragma endregion
-
-#pragma region Methods
-		// funçoes de callback de comportamento da janela
-#pragma endregion
+		GLfloat camera_pitch_angle = 0.0f, camera_yaw_angle = -90.0f;	// valor de rotaçao dos angulos de pitch e yaw
+		glm::vec3 camera_relative_direction = glm::vec3(0.0f,0.0f,-1.0f);	// direcçao da camera relativa ao centro
+		glm::vec3 camera_center = glm::vec3(0.0f, 2.0f, 0.0f);			// posiçao de foco da camera, centro
+#pragma endregion -> InputVars
 	};
-
 }
 #endif

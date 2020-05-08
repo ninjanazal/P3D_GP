@@ -17,6 +17,11 @@ namespace P3D
 		Object(const char*);		// overload do construtor para receber um caminho para o objecto
 		~Object() { std::cout << "Objecto destruido" << std::endl; };	// destrutor da classe
 
+
+		// informaçao publica
+		P3D::Material* object_material;	// material do objecto
+
+
 	   // funçoes do objecto
 	   // Funçao que valida o objecto
 		bool Validate(void);
@@ -33,9 +38,6 @@ namespace P3D
 
 		// desenho
 		void Drawobj(void);
-		// informaçao publica
-		P3D::Material* object_material;	// material do objecto
-
 		// getters
 #pragma region Getters
 	// getter para o nome do objecto

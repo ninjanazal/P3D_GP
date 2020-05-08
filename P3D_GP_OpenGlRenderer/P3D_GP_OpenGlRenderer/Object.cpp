@@ -232,7 +232,6 @@ namespace P3D {
 		glDrawArrays(GL_TRIANGLES, 0, this->vertex.size());
 	}
 
-
 #pragma region PrivateMethods
 	// Metodos privados
 	// carrega o vertex shader

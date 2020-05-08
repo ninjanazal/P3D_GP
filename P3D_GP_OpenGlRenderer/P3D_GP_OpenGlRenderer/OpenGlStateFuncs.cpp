@@ -97,7 +97,6 @@ namespace P3D
 		std::cout << "Error: " + error << " -> " << descripton << std::endl;
 	}
 
-
 	// funçao que inicia o estado do Gl
 	bool StartStateGl(P3D::WindowManager &manager)
 	{
@@ -107,9 +106,6 @@ namespace P3D
 		// cria uma nova janela
 		if (!manager.CreateWindow())
 			return 0; // caso nao tenha conseguido criar uma janela, termina
-
-		// define como é aplicado o modo de imput do rato
-		glfwSetInputMode(manager.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		// define a janela como contexto actual
 		glfwMakeContextCurrent(manager.GetWindow());
@@ -126,6 +122,12 @@ namespace P3D
 		// retorna que concluiu a preparaçao
 		return 1;
 	}
+
+	// funçao que define os callbacks para input
+	void SetInputCallBacks(P3D::WindowManager* manager, P3D::Object* obj) {
+
+	}
+
 
 	// liga valores uniformes
 	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj) {
@@ -162,4 +164,5 @@ namespace P3D
 		// chama eventos de janela e input
 		glfwPollEvents();
 	}
+		
 }
