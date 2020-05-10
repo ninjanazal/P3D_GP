@@ -17,7 +17,7 @@ layout(location = 1) out vec2 v2f_Tex_Coords;	// valor das coordenadas de textur
 void main()
 {
 	// determina a posiçao de clip dos vertices
-	gl_Position = _MVP * vec4(vPosition,1f);
+	gl_Position = _MVP * vec4(vPosition,1.0f);
 	// passa para saida o valor das coordenadas de textura
 	v2f_Normals = vNormals;	// guarda no valor de saida as normais
 	v2f_Tex_Coords = vTex_Coords;	// guarda no valor de saida as coordenadas de textura

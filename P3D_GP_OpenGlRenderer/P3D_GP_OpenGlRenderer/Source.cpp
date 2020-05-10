@@ -6,11 +6,8 @@
 Fase 1[5 valores]:
 (done) • Implementar a gestão de janelas e interface com o utilizador através da biblioteca GLFW;
 (done) • Implementar a manipulação de matrizes e vetores através da biblioteca GLM;
-•(2) Implementar a renderização de um cubo através da biblioteca OpenGL(incluindo a GLEW);
-•(2) A coloração dos fragmentos do cubo deve ser realizada de modo a que cada face apresente uma cor
-	distinta(nota que não é esperado que nesta fase estejam implementados os efeitos de iluminação);
- • A aplicação deverá permitir ao utilizador realizar zoom através da scroll wheel do rato;
-• A aplicação deverá permitir navegar, em torno do modelo 3D, através de movimentos do rato.
+(done) • A aplicação deverá permitir ao utilizador realizar zoom através da scroll wheel do rato;
+(done) • A aplicação deverá permitir navegar, em torno do modelo 3D, através de movimentos do rato.
 
 Fase 2 [6 valores]:
 • Os alunos deverão desenvolver uma biblioteca C++ capaz de:
@@ -20,7 +17,7 @@ Fase 2 [6 valores]:
 (done) o Carregar as propriedades do material (ficheiro .mtl), incluindo a imagem de textura;
 (done) o Carregar a imagem de textura para uma unidade de textura do OpenGL;
 (done) o Disponibilizar função para renderização do objeto.
-• A aplicação deverá fazer uso dessa biblioteca C++ para carregar e renderizar o modelo 3D fornecido;
+(done) • A aplicação deverá fazer uso dessa biblioteca C++ para carregar e renderizar o modelo 3D fornecido;
 
 - Fase 3 [6 valores]:
 • Deverá ser possível aplicar uma qualquer combinação de 4 fontes de luz que incidam sobre o objeto:
