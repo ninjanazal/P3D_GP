@@ -98,16 +98,14 @@ int main(void)
 	// liga atributos uniformes
 	P3D::ConnectUniformValues(window_manager_, obj_to_render_);
 
-	// informa que o ciclo de render foi iniciado
+	// informa que o ciclo de render foi iniciado	e os controls
+	std::cout << "\n-> Press E to enable/disable distortion" << std::endl;
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
 
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow())) {
 		// update para valores de input
 		input_controller->Update();
-
-		// actualiza os valores dos uniforms
-		P3D::ConnectUniformValues(window_manager_, obj_to_render_);
 
 		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
 		P3D::DrawGL(window_manager_, obj_to_render_);

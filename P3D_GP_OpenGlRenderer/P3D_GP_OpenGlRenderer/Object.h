@@ -36,8 +36,13 @@ namespace P3D
 		// Função para atribuir valores ao shader
 		void ConnectShaderValues(void);
 
+		// Handlers de input
+		// Metodo de handler da activaçao da deformaçao
+		void DeformationInputHandler(void);
+
 		// desenho
 		void Drawobj(void);
+
 		// getters
 #pragma region Getters
 	// getter para o nome do objecto
@@ -46,6 +51,8 @@ namespace P3D
 		GLuint GetShaderProgram(void) { return shader_program; };
 		// getter para a matriz de modelo
 		glm::mat4 GetModelMat(void) { return P3D::Object::model_matrix; };
+		// getter para o estado da deformaçao
+		bool GetDeformationvalue(void) { return enable_deformation_; };
 #pragma endregion Getters
 
 	private:
@@ -67,6 +74,9 @@ namespace P3D
 
 		// shader vars
 		GLuint shader_program = 0, vertex_shader_name = 0, fragment_shader_name = 0;	// nome do programa shader
+		// variavel de estado da deformaçao
+		bool enable_deformation_ = false;	// indica se a deformaçao está activa
+
 
 		// private Funcs
 		// carrega o vertex Shader

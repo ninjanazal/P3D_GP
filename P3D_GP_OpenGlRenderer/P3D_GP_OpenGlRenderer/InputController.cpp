@@ -33,6 +33,14 @@ namespace P3D {
 			}
 		}
 	}
+	// Metodo de callback para input do teclado
+	void InputController::KeyboardInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+		// verifica a tecla pressionada
+		if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+			// caso tenha pressionado no 'E' chama a funçao de handel da distorçao do obj
+			this->object_->DeformationInputHandler();
+		}
+	}
 
 	// funçao para atribuir as funçoes de callbacks de input
 	void InputController::SetCallbacksFuncs() {
@@ -57,6 +65,11 @@ namespace P3D {
 
 
 		/* ======================= Input Keyboard =====================*/
+		// define a funçao de callback
+		auto this_callback_keyboardInput = [](GLFWwindow* w, int k, int sm, int a, int m) {
+			static_cast<InputController*>(glfwGetWindowUserPointer(w))->KeyboardInputCallback(w, k, sm, a, m); };
+		// define o callback de acordo com a fucçao determinada anteriormente
+		glfwSetKeyCallback(this->window_manager_->GetWindow(), this_callback_keyboardInput);
 
 		// informa que todos os callbacks foram atribuidos
 		std::cout << "\n\n-> All Callbacs setted successfully!" << std::endl;

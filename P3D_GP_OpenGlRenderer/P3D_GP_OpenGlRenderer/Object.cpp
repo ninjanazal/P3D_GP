@@ -221,6 +221,7 @@ namespace P3D {
 		std::cout << "Buffers Connected!" << std::endl;
 	}
 
+
 	// vincula o vao do obj
 	void Object::Drawobj(void) {
 		// vincula o vao do objecto
@@ -230,6 +231,12 @@ namespace P3D {
 
 		// envia o comando de desenho das primitivas utilizando o vao vinculado
 		glDrawArrays(GL_TRIANGLES, 0, this->vertex.size());
+	}
+
+	// handler de input para a deformaçao
+	void Object::DeformationInputHandler(void) {
+		// toggle para activar ou desativar a deformaçao
+		this->enable_deformation_ = (enable_deformation_) ? false : true;
 	}
 
 #pragma region PrivateMethods

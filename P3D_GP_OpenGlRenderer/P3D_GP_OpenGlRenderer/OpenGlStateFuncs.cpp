@@ -132,6 +132,7 @@ namespace P3D
 	// liga valores uniformes
 	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj) {
 		// valores uniformes gerais
+		
 		// ====== matriz MVP
 		// determina a matrix mvp
 		glm::mat4 mvp_matrix = manager->GetProjectionMat() * manager->GetViewMat() * obj->GetModelMat();
@@ -140,10 +141,13 @@ namespace P3D
 		// com o nome atribui o valor
 		glProgramUniformMatrix4fv(obj->GetShaderProgram(), mvp_location, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
-		// valor de tempo de jogo, 
-		GLfloat total_time = glfwGetTime();
 		// atribui ao uniform _TIME, o tempo de execuçao total do GL
-		glProgramUniform1f(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_TIME"), total_time);
+		glProgramUniform1f(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_TIME"), float(glfwGetTime()));
+
+		// actualiza o uniform da deformaçao no shader
+		glProgramUniform1i(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_ENABLE_DEFORMATION"),
+			obj->GetDeformationvalue());
+
 	}
 
 	// funçao de draw do GL

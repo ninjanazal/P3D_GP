@@ -28,5 +28,7 @@ namespace P3D {
 		void ScrollCallBack(GLFWwindow* window, double xoffset, double yoffset);
 		// Metodo de callback para o press do rato
 		void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+		// Metodo de callback para input do teclado
+		void KeyboardInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	};
 }
