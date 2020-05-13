@@ -18,6 +18,7 @@
 
 #define SCROLL_SPEED 0.5
 #define ROTATION_SPEED 1
+#define MOVE_SPEED 0.01
 
 // classe que comporta o comportamento e gestao de janelas
 namespace P3D
@@ -41,6 +42,8 @@ namespace P3D
 		// input do rato
 		// roda a camera em torno do alvo(Handler)
 		void RotateCameraAroundHandler(float xValue, float yvalue);
+		// input de teclado, sobe e desce o alvo da camera
+		void UpDownCameraTarget(float directionValue);
 #pragma endregion -> CallBackHandlers
 
 
@@ -51,6 +54,10 @@ namespace P3D
 		glm::mat4 GetProjectionMat(void) { return this->projection_matrix; };
 		// getter para a matriz de vista
 		glm::mat4 GetViewMat(void) { return this->view_matrix; };
+		// getter para a posiçao da camera
+		glm::vec3 GetCameraPositon(void) { return camera_center - (glm::normalize(camera_relative_direction) * mouse_zoom); }
+		// getter para a direcçao da camera
+		glm::vec3 GetCameraDirection(void) { return -this->camera_relative_direction; }
 #pragma endregion -> Getters
 
 

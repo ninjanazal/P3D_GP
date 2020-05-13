@@ -33,7 +33,7 @@ o ‘3’ – Ativar/desativar fonte de luz pontual;
 o ‘4’ – Ativar/desativar fonte de luz cónica.
 
 - Fase 4 [3 valores]:
-• Dotar o vertex shader da possibilidade de ativar/desativar um efeito de deformação do modelo 3D
+(Done) • Dotar o vertex shader da possibilidade de ativar/desativar um efeito de deformação do modelo 3D
 carregado. Esta deformação deverá variar em função do tempo.
 */
 
@@ -100,6 +100,8 @@ int main(void)
 
 	// informa que o ciclo de render foi iniciado	e os controls
 	std::cout << "\n-> Press E to enable/disable distortion" << std::endl;
+	std::cout << "-> Press W/S to go up/down" << std::endl;
+	// indica que o ciclo de jogo começou
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
 
 	// ciclo de render

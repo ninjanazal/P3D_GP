@@ -19,9 +19,6 @@ namespace P3D
 	// Funçao de preparaçao do estado do GL
 	bool StartStateGl(P3D::WindowManager& manager);
 
-	//Funçao que define os callbacks para o input
-	void SetInputCallBacks(P3D::WindowManager* manager, P3D::Object* obj);
-
 	// Funçao de atribuiçao de valores uniformes
 	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj);
 	// Funçao de render do estado do GL

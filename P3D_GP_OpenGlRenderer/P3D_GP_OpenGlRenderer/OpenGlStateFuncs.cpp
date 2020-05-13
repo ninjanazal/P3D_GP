@@ -98,7 +98,7 @@ namespace P3D
 	}
 
 	// funçao que inicia o estado do Gl
-	bool StartStateGl(P3D::WindowManager &manager)
+	bool StartStateGl(P3D::WindowManager& manager)
 	{
 		if (!P3D::InitGLFW())
 			return 0;	// caso nao tenha iniciado correctamente, aborta
@@ -123,23 +123,25 @@ namespace P3D
 		return 1;
 	}
 
-	// funçao que define os callbacks para input
-	void SetInputCallBacks(P3D::WindowManager* manager, P3D::Object* obj) {
-
-	}
-
 
 	// liga valores uniformes
 	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj) {
 		// valores uniformes gerais
-		
+
 		// ====== matriz MVP
 		// determina a matrix mvp
 		glm::mat4 mvp_matrix = manager->GetProjectionMat() * manager->GetViewMat() * obj->GetModelMat();
-		// obtem a localizaçao do atributo uniform "MVP"
-		GLint mvp_location = glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "_MVP");
 		// com o nome atribui o valor
-		glProgramUniformMatrix4fv(obj->GetShaderProgram(), mvp_location, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+		glProgramUniformMatrix4fv(obj->GetShaderProgram(), glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "_MVP"),
+			1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+		// ============== camera Info ===============
+		// atribui a posiçao da camera ao uniform
+		glProgramUniform3fv(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_VIEW_POS"),
+			1, glm::value_ptr(manager->GetCameraPositon()));
+		// atribui a direcçao da camera ao uniform
+		glProgramUniform3fv(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_VIEW_DIR"), 1,
+			glm::value_ptr(manager->GetCameraDirection()));
 
 		// atribui ao uniform _TIME, o tempo de execuçao total do GL
 		glProgramUniform1f(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_TIME"), float(glfwGetTime()));
@@ -151,7 +153,7 @@ namespace P3D
 	}
 
 	// funçao de draw do GL
-	void DrawGL(P3D::WindowManager *manager, P3D::Object *obj) {
+	void DrawGL(P3D::WindowManager* manager, P3D::Object* obj) {
 		// Funçao de Draw
 		// limpa os buffers de cor e de profundidade
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -168,5 +170,5 @@ namespace P3D
 		// chama eventos de janela e input
 		glfwPollEvents();
 	}
-		
+
 }

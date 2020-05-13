@@ -10,9 +10,13 @@ namespace P3D
 
 		Material() {};	// construtor semp parametros
 		Material(const char*, const char*);	// construtor, recebe o nome do material e o directorio
-		~Material();	// destrutor da classe
+
+		~Material() {};	// destrutor da classe
 
 		// informaçao publica
+		// metodo liga valores carregados com estruturas do shader
+		void LoadMaterialProperties(GLint program);
+
 		// informaçao da textura
 		P3D::Texture* material_texture;
 

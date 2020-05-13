@@ -37,11 +37,26 @@ namespace P3D {
 			}
 		}
 	}
+	// metodo chamado para carregar os valores do material para a GPU
+	void Material::LoadMaterialProperties(GLint program) {
+		// carrega os valores do material para o shader
+		// valores do coeficiente de reflexao da luz ambiente
+		glProgramUniform3fv(program, glGetUniformLocation(program, "MAT.KA_AMBIENT"), 1,
+			glm::value_ptr(this->GetMaterialAmbienteVal()));
+		// valores de coeficiente de reflexao da luz difusa
+		glProgramUniform3fv(program, glGetUniformLocation(program, "MAT.KD_DIFUSE"), 1,
+			glm::value_ptr(this->GetMaterialDifuseVal()));
+		// valores de coeficiente de reflexao da luz especular
+		glProgramUniform3fv(program, glGetUniformLocation(program, "MAT.KS_SPECULAR"), 1,
+			glm::value_ptr(this->GetMaterialSpecularVal()));
 
-	inline Material::~Material()
-	{
+		// valor de expoente especular
+		glProgramUniform1f(program, glGetUniformLocation(program, "MAT.NS_SPECULAR"),
+			this->GetSpecularExponentialVal());
+		std::cout << GetSpecularExponentialVal() << std::endl;
+		// informa que os valores do matrial foram associados ao shader
+		std::cout << "Materials values setted on shader" << std::endl;
 	}
-
 
 #pragma region PrivateMethods
 	// imprime informaçoes do material

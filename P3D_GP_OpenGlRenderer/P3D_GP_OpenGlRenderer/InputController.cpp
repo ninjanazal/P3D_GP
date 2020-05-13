@@ -40,6 +40,15 @@ namespace P3D {
 			// caso tenha pressionado no 'E' chama a funçao de handel da distorçao do obj
 			this->object_->DeformationInputHandler();
 		}
+		// caso a tecla w esteja pressionada
+		else if (key == GLFW_KEY_W && glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+			// invoca handler de resposta
+			this->window_manager_->UpDownCameraTarget(1.0f);
+		}
+		else if (key == GLFW_KEY_S && glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+			// invoca handler de resposta
+			this->window_manager_->UpDownCameraTarget(-1.0f);
+		}
 	}
 
 	// funçao para atribuir as funçoes de callbacks de input

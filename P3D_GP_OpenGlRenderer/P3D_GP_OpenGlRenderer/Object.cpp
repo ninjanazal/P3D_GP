@@ -213,8 +213,10 @@ namespace P3D {
 		// activa o atributo
 		glEnableVertexAttribArray(vTex_Coords_location);
 
-		// TODO
-		// atribuir textura 
+		// carrega valores do mateiral para o shader
+		this->object_material->LoadMaterialProperties(this->shader_program);
+
+		// carrega valores detextura 
 		this->object_material->material_texture->ConnectTextureShaderValue(this->shader_program);
 
 		// indica que os atributos foram definidos com sucesso

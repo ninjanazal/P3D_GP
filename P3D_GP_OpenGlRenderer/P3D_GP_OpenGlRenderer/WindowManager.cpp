@@ -46,6 +46,9 @@ namespace P3D {
 		// o scrool do rato influencia a distancia, define o zoom
 		this->mouse_zoom -= SCROLL_SPEED * yoffset;
 
+		// clamp do zoom, impede que a camera de clip no ob
+		this->mouse_zoom = glm::clamp(mouse_zoom, 1.0f, 10.0f);
+
 		// actualiza a matriz de vista
 		this->view_matrix = glm::lookAt(
 			camera_center - (glm::normalize(camera_relative_direction) * mouse_zoom),	// eye (posição da câmara).
@@ -57,7 +60,7 @@ namespace P3D {
 		// adiciona ao valor do angulo actual
 		this->camera_yaw_angle += xValue * ROTATION_SPEED;
 		// impede que a camera rode para lá de valores pretendidos
-		if (camera_pitch_angle - (yValue * ROTATION_SPEED ) < 85.0f && camera_pitch_angle - (yValue * ROTATION_SPEED) > -85.0f)
+		if (camera_pitch_angle - (yValue * ROTATION_SPEED) < 85.0f && camera_pitch_angle - (yValue * ROTATION_SPEED) > -85.0f)
 			this->camera_pitch_angle -= yValue * ROTATION_SPEED;
 
 		//// define o vector de direcçao relativo 	
@@ -66,6 +69,16 @@ namespace P3D {
 		camera_relative_direction.z = glm::sin(glm::radians(camera_yaw_angle)) * glm::cos(glm::radians(camera_pitch_angle));
 
 		// actualiza a matriz de vista
+		this->view_matrix = glm::lookAt(
+			camera_center - (glm::normalize(camera_relative_direction) * mouse_zoom),	// eye (posição da câmara).
+			camera_center,		// center
+			glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	// metodo que sobe e desce a posiçao de alvo da camera
+	void WindowManager::UpDownCameraTarget(float directionValue) {
+		// altera a altura do alvo da camera de acordo com a direcçao recebidaa
+		camera_center.y += directionValue * MOVE_SPEED;
+		// atualiza a matriz de vista
 		this->view_matrix = glm::lookAt(
 			camera_center - (glm::normalize(camera_relative_direction) * mouse_zoom),	// eye (posição da câmara).
 			camera_center,		// center
