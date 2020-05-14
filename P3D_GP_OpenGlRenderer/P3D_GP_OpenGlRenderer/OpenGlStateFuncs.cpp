@@ -6,6 +6,15 @@ namespace P3D
 	// decleraçao da funçao de callback para erros
 	void ErrorCallback(int error, const char* descripton);
 
+	// inicia as luzes, 4, uma para cada tipo
+	void InitLights(P3D::Light* lights)
+	{
+		// inicia cada uma das luzes
+		lights[0] = P3D::Light(P3D::kLIGHTTYPE::kAmbiente);		// luz ambiente na pos 0
+		lights[1] = P3D::Light(P3D::kLIGHTTYPE::kDirectional);	// luz direcional na pos 1
+		lights[2] = P3D::Light(P3D::kLIGHTTYPE::kPoint);		// luz pontual na pos 2
+		lights[3] = P3D::Light(P3D::kLIGHTTYPE::kCone);			// luz conica na pos 3
+	}
 
 	// funçao que inicia o estado do GL
 	bool InitGLFW()
@@ -125,7 +134,7 @@ namespace P3D
 
 
 	// liga valores uniformes
-	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj) {
+	void ConnectUniformValues(P3D::WindowManager* manager, P3D::Object* obj, P3D::Light* lights) {
 		// valores uniformes gerais
 
 		// ====== matriz MVP
@@ -150,16 +159,23 @@ namespace P3D
 		glProgramUniform1i(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_ENABLE_DEFORMATION"),
 			obj->GetDeformationvalue());
 
+		// =============== Luz ==================
+		// atualiza os valores
+		for (int i = 0; i < 4; i++) {
+			// para cada uma das luzes actualiza o seu estado
+			lights[i].UpdateShaderLightState(obj->GetShaderProgram());
+		}
+
 	}
 
 	// funçao de draw do GL
-	void DrawGL(P3D::WindowManager* manager, P3D::Object* obj) {
+	void DrawGL(P3D::WindowManager* manager, P3D::Object* obj, P3D::Light* lights) {
 		// Funçao de Draw
 		// limpa os buffers de cor e de profundidade
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// update logico
-		P3D::ConnectUniformValues(manager, obj);
+		P3D::ConnectUniformValues(manager, obj, lights);
 
 		// render Update
 		// desenha o objecto

@@ -3,8 +3,8 @@
 
 namespace P3D {
 
-	InputController::InputController(P3D::WindowManager* manager, P3D::Object* obj) :
-		window_manager_(manager), object_(obj) {
+	InputController::InputController(P3D::WindowManager* manager, P3D::Object* obj, P3D::Light* lights) :
+		window_manager_(manager), object_(obj), lights_(lights) {
 		// informa que o controlador de input está definido
 		std::cout << "Input Controller setted!" << std::endl;
 	}
@@ -41,13 +41,29 @@ namespace P3D {
 			this->object_->DeformationInputHandler();
 		}
 		// caso a tecla w esteja pressionada
-		else if (key == GLFW_KEY_W && glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		if (key == GLFW_KEY_W && glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			// invoca handler de resposta
 			this->window_manager_->UpDownCameraTarget(1.0f);
 		}
-		else if (key == GLFW_KEY_S && glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		if (key == GLFW_KEY_S && glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 			// invoca handler de resposta
 			this->window_manager_->UpDownCameraTarget(-1.0f);
+		}
+		else if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+			// ao carregar na tecla 1 deve alterar o estado da luz ambiente
+			lights_[0].EnableLight();
+		}
+		else if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
+			// ao carregar na tecla 1 deve alterar o estado da luz ambiente
+			lights_[1].EnableLight();
+		}
+		else if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
+			// ao carregar na tecla 1 deve alterar o estado da luz ambiente
+			lights_[2].EnableLight();
+		}
+		else if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
+			// ao carregar na tecla 1 deve alterar o estado da luz ambiente
+			lights_[3].EnableLight();
 		}
 	}
 

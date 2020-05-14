@@ -34,6 +34,12 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{5c7b49e6-856b-42d3-ada7-ae97217f10cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Light">
+      <UniqueIdentifier>{6836d2a9-26b7-440f-a0c7-ae7b063e627a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{d89a7b5b-9e02-4e24-8350-634bdd608660}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -63,6 +69,9 @@
     <ClCompile Include="InputController.cpp">
       <Filter>Source Files\InputController</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="InputController.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

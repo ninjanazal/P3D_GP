@@ -40,6 +40,7 @@ carregado. Esta deformação deverá variar em função do tempo.
 // includes
 #include "OpenGlState.h"
 #include "InputController.h"
+#include "Light.h"
 
 // define o tamanho da janela de visualizaçao
 #define WINDOW_WIDTH 800
@@ -55,6 +56,7 @@ int main(void)
 	P3D::Object* obj_to_render_;	// define um novo objecto
 	P3D::WindowManager* window_manager_;	// controlador de janelas
 	P3D::InputController* input_controller;	// controlador de input
+	P3D::Light lights[4];		// array de luzes
 
 	// leitura do ficheiro
 	char obj_path[256];	// caminha para o directorio
@@ -63,24 +65,30 @@ int main(void)
 	// iniciaçao para ler valores do ficheiro xyz
 	// indicaçao do caminho do ficheiro
 	std::cout << "Insert object directory: ";
-
 	std::cin.clear();
 	std::cin.get(obj_path, sizeof(obj_path) / sizeof(obj_path[0]));
 	std::cout << "Checking file Directory..." << std::endl;
 
 	// inicia a criaçao de um objecto
 	obj_to_render_ = new P3D::Object(obj_path);
+
 	// confirma se o objecto foi carregado com sucesso
 	if (!obj_to_render_->Validate())
 		return -1; // caso nao existam vertices carregados, aborta o render
-
 
 	// inicia uma nova janela
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	// inicia a criaçao das luzes
+	P3D::InitLights(lights);
+	// define os valores para cada uma das luzes
+	// valores para luz ambiente
+	lights[0].SetLightValue(0.8f, 1.5f, 2.5f);
+
+
 	// define o controlador de intpu
-	input_controller = new P3D::InputController(window_manager_, obj_to_render_);
+	input_controller = new P3D::InputController(window_manager_, obj_to_render_, lights);
 
 	// inicia o estado do GL
 	P3D::StartStateGl(*window_manager_);
@@ -95,14 +103,29 @@ int main(void)
 	// liga os atributos ás propriedades do shader
 	obj_to_render_->ConnectShaderValues();
 
+	// liga valores da luz ao shader
+	for (int i = 0; i < 4; i++) {
+		lights[i].SetShaderLightValue(obj_to_render_->GetShaderProgram());
+	}
+
 	// liga atributos uniformes
-	P3D::ConnectUniformValues(window_manager_, obj_to_render_);
+	P3D::ConnectUniformValues(window_manager_, obj_to_render_, lights);
 
 	// informa que o ciclo de render foi iniciado	e os controls
 	std::cout << "\n-> Press E to enable/disable distortion" << std::endl;
 	std::cout << "-> Press W/S to go up/down" << std::endl;
+	std::cout << "-> Press '1' to enable/disable ambient light" << std::endl;
+	std::cout << "-> Press '2' to enable/disable directional light" << std::endl;
+	std::cout << "-> Press '3' to enable/disable point light" << std::endl;
+	std::cout << "-> Press '4' to enable/disable cone light" << std::endl;
+
 	// indica que o ciclo de jogo começou
 	std::cout << "\n === Render Cycle Started! ===" << std::endl;
+
+	// imprime as informaçoes das luzes
+	for (int i = 0; i < 4; i++) {
+		lights[i].DisplayLightInfo();
+	}
 
 	// ciclo de render
 	while (!glfwWindowShouldClose(window_manager_->GetWindow())) {
@@ -110,7 +133,7 @@ int main(void)
 		input_controller->Update();
 
 		// chama funçao de draw de GL, recebe o gestor de janela e o objecto a mostrar
-		P3D::DrawGL(window_manager_, obj_to_render_);
+		P3D::DrawGL(window_manager_, obj_to_render_, lights);
 	}
 
 	// termina o espaço glfw, destroi janelas e cursores ainda abertos
