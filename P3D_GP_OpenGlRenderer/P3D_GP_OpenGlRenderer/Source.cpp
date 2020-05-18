@@ -20,17 +20,17 @@ Fase 2 [6 valores]:
 (done) • A aplicação deverá fazer uso dessa biblioteca C++ para carregar e renderizar o modelo 3D fornecido;
 
 - Fase 3 [6 valores]:
-• Deverá ser possível aplicar uma qualquer combinação de 4 fontes de luz que incidam sobre o objeto:
-o Luz ambiente;
-o Luz direcional;
-o Luz pontual;
-o Luz cónica.
+(done)• Deverá ser possível aplicar uma qualquer combinação de 4 fontes de luz que incidam sobre o objeto:
+(done)o Luz ambiente;
+(done)o Luz direcional;
+(done)o Luz pontual;
+(done)o Luz cónica.
 • Os parâmetros de cada uma das fontes de luz ficam ao critério de cada grupo;
-• A aplicação deverá permitir ao utilizador ativar/desativar cada fonte de luz, através de uma tecla:
-o ‘1’ – Ativar/desativar fonte de luz ambiente;
-o ‘2’ – Ativar/desativar fonte de luz direcional;
-o ‘3’ – Ativar/desativar fonte de luz pontual;
-o ‘4’ – Ativar/desativar fonte de luz cónica.
+(done)• A aplicação deverá permitir ao utilizador ativar/desativar cada fonte de luz, através de uma tecla:
+(done)o ‘1’ – Ativar/desativar fonte de luz ambiente;
+(done)o ‘2’ – Ativar/desativar fonte de luz direcional;
+(done)o ‘3’ – Ativar/desativar fonte de luz pontual;
+(done)o ‘4’ – Ativar/desativar fonte de luz cónica.
 
 - Fase 4 [3 valores]:
 (Done) • Dotar o vertex shader da possibilidade de ativar/desativar um efeito de deformação do modelo 3D
@@ -44,7 +44,7 @@ carregado. Esta deformação deverá variar em função do tempo.
 
 // define o tamanho da janela de visualizaçao
 #define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_HEIGHT 900
 
 int main(void)
 {
@@ -80,6 +80,7 @@ int main(void)
 	window_manager_ = new P3D::WindowManager(("obj to render " + obj_to_render_->GetObjName()).c_str(),
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 
+#pragma region lightDef
 	// inicia a criaçao das luzes
 	P3D::InitLights(lights);
 	// define os valores para cada uma das luzes
@@ -106,6 +107,7 @@ int main(void)
 	lights[3].SetAttenuationValues(	1.0f, 0.09f, 0.032f);	// constantes de atenuaçao
 	lights[3].SetLightExponentVal(	20.5f);					// valor exponencial de especular
 	lights[3].SetLightCutOffAngle(	10.5f);					// angulo de cutOff
+#pragma endregion -> lightDef
 
 	// define o controlador de intpu
 	input_controller = new P3D::InputController(window_manager_, obj_to_render_, lights);
@@ -140,7 +142,7 @@ int main(void)
 	std::cout << "-> Press '4' to enable/disable cone light" << std::endl;
 
 	// indica que o ciclo de jogo começou
-	std::cout << "\n === Render Cycle Started! ===" << std::endl;
+	std::cout << "\n === Render Cycle Started! ===\n" << std::endl;
 
 	// imprime as informaçoes das luzes
 	for (int i = 0; i < 4; i++) {

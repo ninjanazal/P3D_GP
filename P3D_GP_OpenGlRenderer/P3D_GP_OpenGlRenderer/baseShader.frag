@@ -223,7 +223,7 @@ vec4 SpotLightValue(){
 	// determina a influencia do cone , determinada pela direçao do cone e a direçao da luz ao fragmento
 	float DdotV = dot(L, normalize(SPOTLIGHT._DIRECTION));
 
-	// calcula a atenuaçao de acordo com as constantes passadas
+	// calcula a atenuaçao de acordo com as constantes passadas e a influencia do cone
 	float attenuation_val = (1.0f * pow(DdotV, SPOTLIGHT._EXPONENT_VAL))/
 		(SPOTLIGHT._CONSTANT_VAL + SPOTLIGHT._LINEAR_VAL * dist_to_frag + 
 			SPOTLIGHT._QUADRATIC_VAL * pow(dist_to_frag,2.0f));
