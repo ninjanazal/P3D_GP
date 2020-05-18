@@ -41,7 +41,8 @@ namespace P3D {
 				light_direction[2] << std::endl;
 			std::cout << "Attenuation values :: constant-> " << this->constant << " :: linear-> " << this->linear <<
 				" :: quadratic-> " << this->quadratic << std::endl;
-			std::cout << "Spot values :: Exponet-> " << this->exponent_val << " :: CutOffValue-> " << glm::degrees(this->cutoff_angle) << std::endl;
+			std::cout << "Spot values :: Exponet-> " << this->exponent_val << " :: CutOffValue-> " << glm::degrees(this->cutoff_angle)<<
+				" :: OutCutOffValue -> "<< this->outr_cutoff_angle << std::endl;
 			break;
 		default:
 			// caso nao tenha o tipo definido
@@ -106,7 +107,11 @@ namespace P3D {
 	// define o angulo de cutOff recebe graus e e ajusta para valores de produto escalar
 	void Light::SetLightCutOffAngle(float angle_degrees) {
 		// guarda o valor em radianos
-		this->cutoff_angle = glm::radians(angle_degrees);
+		this->cutoff_angle = glm::cos(glm::radians(angle_degrees));
+	}
+	// define o angulo de cutoff, recebe em graus e ajusta para valores de produto escalar
+	void Light::SetLightOutCutOffAngle(float outer_angle_degrees)	{
+		this->outr_cutoff_angle = glm::cos(glm::radians(outer_angle_degrees));
 	}
 
 	// define valores da luz no shader
@@ -176,6 +181,8 @@ namespace P3D {
 			glProgramUniform1f(shader_program, glGetUniformLocation(shader_program, "SPOTLIGHT._EXPONENT_VAL"), exponent_val);
 			// define o valor do cutoff 
 			glProgramUniform1f(shader_program, glGetUniformLocation(shader_program, "SPOTLIGHT._CUTOFF_ANGLE"), cutoff_angle);
+			// define o valor do cutoff exterior
+			glProgramUniform1f(shader_program, glGetUniformLocation(shader_program, "SPOTLIGHT._OUT_CUTOFF_ANGLE"), outr_cutoff_angle); 
 			break;
 		default:
 			// caso nao tenha o tipo definido

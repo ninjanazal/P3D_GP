@@ -50,6 +50,8 @@ namespace P3D {
 		void SetLightExponentVal(float exponet);
 		// define o angulo de cutOff
 		void SetLightCutOffAngle(float angle_degrees);
+		// define o angulo de cutoff maior
+		void SetLightOutCutOffAngle(float outer_angle_degrees);
 
 		// Define valores da luz no shader
 		void SetShaderLightValue(GLint shader_program);
@@ -75,6 +77,7 @@ namespace P3D {
 		// valor de cutOff para luz conica
 		float exponent_val = 0;			// expoente para a luz conica
 		float cutoff_angle = 0;			// angulo de cutOff
+		float outr_cutoff_angle = 0;	// angulo maior de cutoff
 	};
 }
 

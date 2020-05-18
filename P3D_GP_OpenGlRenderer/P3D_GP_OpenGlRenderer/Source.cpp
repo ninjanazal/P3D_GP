@@ -43,8 +43,8 @@ carregado. Esta deformação deverá variar em função do tempo.
 #include "Light.h"
 
 // define o tamanho da janela de visualizaçao
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 900
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 800
 
 int main(void)
 {
@@ -99,14 +99,15 @@ int main(void)
 	lights[2].SetSpecularLightValue(1.6f, 1.6f, 0.5f);		// componente especular
 	lights[2].SetAttenuationValues(	1.0f, 0.09f, 0.032f);	// constantes de atenuaçao
 	// luz conica +++++++++++++++++
-	lights[3].SetLightPosition(		0.0f, 2.8f, 1.0f);		// posiçao da luz
-	lights[3].SetLightDirection(	0.0f, 0.0f, 1.0f);		// direcçao da luz
+	lights[3].SetLightPosition(		0.0f, 2.8f, 5.5f);		// posiçao da luz
+	lights[3].SetLightDirection(	0.0f, 0.0f, -1.0f);		// direcçao da luz
 	lights[3].SetAmbientLightValue(	1.5f, 0.5f, 2.5f);		// componente ambiente
 	lights[3].SetDifuseLightValue(	1.5f, 0.5f, 2.5f);		// componente difusa
 	lights[3].SetSpecularLightValue(1.5f, 0.5f, 2.5f);		// componente especular
 	lights[3].SetAttenuationValues(	1.0f, 0.09f, 0.032f);	// constantes de atenuaçao
-	lights[3].SetLightExponentVal(	20.5f);					// valor exponencial de especular
-	lights[3].SetLightCutOffAngle(	10.5f);					// angulo de cutOff
+	lights[3].SetLightExponentVal(	10.5f);					// valor exponencial de especular
+	lights[3].SetLightCutOffAngle(	0.5f);					// angulo de cutOff
+	lights[3].SetLightOutCutOffAngle(2.5f);					// angulo exterior de cutOff
 #pragma endregion -> lightDef
 
 	// define o controlador de intpu

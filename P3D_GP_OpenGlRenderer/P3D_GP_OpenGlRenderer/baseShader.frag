@@ -74,6 +74,7 @@ struct _SPOT_LIGHT{
 
 	float _EXPONENT_VAL;	// valor exponencial da luz
 	float _CUTOFF_ANGLE;	// angulo de cutOff da luz conica
+	float _OUT_CUTOFF_ANGLE;	// angulo de cutOff maior para suavizar
 };
 // Uniform da luz pontual
 uniform _SPOT_LIGHT SPOTLIGHT;
@@ -221,13 +222,18 @@ vec4 SpotLightValue(){
 	// determina a distancia a que a luz encontra-se do fragmento
 	float dist_to_frag = length(SPOTLIGHT._POSITION - v2f_Positions.xyz);
 	// determina a influencia do cone , determinada pela direçao do cone e a direçao da luz ao fragmento
-	float DdotV = dot(L, normalize(SPOTLIGHT._DIRECTION));
-
-	// calcula a atenuaçao de acordo com as constantes passadas e a influencia do cone
-	float attenuation_val = (1.0f * pow(DdotV, SPOTLIGHT._EXPONENT_VAL))/
-		(SPOTLIGHT._CONSTANT_VAL + SPOTLIGHT._LINEAR_VAL * dist_to_frag + 
-			SPOTLIGHT._QUADRATIC_VAL * pow(dist_to_frag,2.0f));
-
+	float DdotV = dot(L, normalize(-SPOTLIGHT._DIRECTION));
+	// atenua o corte de luz utilizando o valor de cutoffmaior
+	float smooth_edges_ = clamp((DdotV - SPOTLIGHT._OUT_CUTOFF_ANGLE)/(SPOTLIGHT._CUTOFF_ANGLE - SPOTLIGHT._OUT_CUTOFF_ANGLE),
+		0.0f,1.0f);
+	// determina se o fragmento está dentro do alcance da luz
+	float attenuation_val = 0.0f;
+	if(DdotV > SPOTLIGHT._OUT_CUTOFF_ANGLE){
+		// calcula a atenuaçao de acordo com as constantes passadas e a influencia do cone
+		attenuation_val = (1.0f * pow(DdotV, SPOTLIGHT._EXPONENT_VAL))/
+			(SPOTLIGHT._CONSTANT_VAL + SPOTLIGHT._LINEAR_VAL * dist_to_frag + 
+				SPOTLIGHT._QUADRATIC_VAL * pow(dist_to_frag,2));
+	}
 	// retorna o valor de contribuiçao para a luz pontual
-	return ((ambient_val + diffuse_val + specular_val) * attenuation_val);
+	return ((ambient_val + diffuse_val + specular_val) * attenuation_val * smooth_edges_);
 }
