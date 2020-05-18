@@ -41,11 +41,11 @@ namespace P3D {
 			this->object_->DeformationInputHandler();
 		}
 		// caso a tecla w esteja pressionada
-		if (key == GLFW_KEY_W && glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		if (key == GLFW_KEY_W && action == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			// invoca handler de resposta
 			this->window_manager_->UpDownCameraTarget(1.0f);
 		}
-		if (key == GLFW_KEY_S && glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		if (key == GLFW_KEY_S && action == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 			// invoca handler de resposta
 			this->window_manager_->UpDownCameraTarget(-1.0f);
 		}

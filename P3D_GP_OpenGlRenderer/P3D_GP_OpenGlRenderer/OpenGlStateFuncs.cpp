@@ -143,14 +143,14 @@ namespace P3D
 		// com o nome atribui o valor
 		glProgramUniformMatrix4fv(obj->GetShaderProgram(), glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "_MVP"),
 			1, GL_FALSE, glm::value_ptr(mvp_matrix));
+		// atribui a matriz de modelo ao uniform
+		glProgramUniformMatrix4fv(obj->GetShaderProgram(), glGetProgramResourceLocation(obj->GetShaderProgram(), GL_UNIFORM, "_MODEL"),
+			1, GL_FALSE, glm::value_ptr(obj->GetModelMat()));
 
 		// ============== camera Info ===============
 		// atribui a posiçao da camera ao uniform
 		glProgramUniform3fv(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_VIEW_POS"),
 			1, glm::value_ptr(manager->GetCameraPositon()));
-		// atribui a direcçao da camera ao uniform
-		glProgramUniform3fv(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_VIEW_DIR"), 1,
-			glm::value_ptr(manager->GetCameraDirection()));
 
 		// atribui ao uniform _TIME, o tempo de execuçao total do GL
 		glProgramUniform1f(obj->GetShaderProgram(), glGetUniformLocation(obj->GetShaderProgram(), "_TIME"), float(glfwGetTime()));

@@ -83,9 +83,29 @@ int main(void)
 	// inicia a criaçao das luzes
 	P3D::InitLights(lights);
 	// define os valores para cada uma das luzes
+	// luz ambiente +++++++++++++
 	// valores para luz ambiente
-	lights[0].SetLightValue(0.8f, 1.5f, 2.5f);
-
+	lights[0].SetAmbientLightValue(	1.5f, 1.5f, 1.5f);
+	// luz direcional ++++++++++++
+	lights[1].SetLightDirection(	-1.0f, 0.0f, -1.0f);	// direcçao da luz
+	lights[1].SetAmbientLightValue(	0.0f, 0.6f, 0.6f);		// componente ambiente
+	lights[1].SetDifuseLightValue(	0.0f, 0.6f, 0.6f);		// componente difusa
+	lights[1].SetSpecularLightValue(0.0f, 0.6f, 0.6f);		// componente especular
+	// luz pontual +++++++++++++++
+	lights[2].SetLightPosition(		-1.5f, 5.5f, -1.5f);		// posiçao da luz
+	lights[2].SetAmbientLightValue(	1.6f, 1.6f, 0.5f);		// componente ambiente
+	lights[2].SetDifuseLightValue(	1.6f, 1.6f, 0.5f);		// componente difusa
+	lights[2].SetSpecularLightValue(1.6f, 1.6f, 0.5f);		// componente especular
+	lights[2].SetAttenuationValues(	1.0f, 0.09f, 0.032f);	// constantes de atenuaçao
+	// luz conica +++++++++++++++++
+	lights[3].SetLightPosition(		0.0f, 2.8f, 1.0f);		// posiçao da luz
+	lights[3].SetLightDirection(	0.0f, 0.0f, 1.0f);		// direcçao da luz
+	lights[3].SetAmbientLightValue(	1.5f, 0.5f, 2.5f);		// componente ambiente
+	lights[3].SetDifuseLightValue(	1.5f, 0.5f, 2.5f);		// componente difusa
+	lights[3].SetSpecularLightValue(1.5f, 0.5f, 2.5f);		// componente especular
+	lights[3].SetAttenuationValues(	1.0f, 0.09f, 0.032f);	// constantes de atenuaçao
+	lights[3].SetLightExponentVal(	20.5f);					// valor exponencial de especular
+	lights[3].SetLightCutOffAngle(	10.5f);					// angulo de cutOff
 
 	// define o controlador de intpu
 	input_controller = new P3D::InputController(window_manager_, obj_to_render_, lights);
