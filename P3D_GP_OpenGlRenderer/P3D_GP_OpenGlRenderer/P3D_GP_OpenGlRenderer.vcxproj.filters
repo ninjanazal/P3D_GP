@@ -13,10 +13,98 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\FuncsHeaders">
+      <UniqueIdentifier>{e34a2c11-8e59-468b-80d2-dd2676f0a13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Obj">
+      <UniqueIdentifier>{69dca17a-44f5-4b87-a07f-217b3c011ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Obj">
+      <UniqueIdentifier>{668c465b-9334-4bb8-801e-6086e4d51a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WindowManager">
+      <UniqueIdentifier>{cb51b5b4-4aee-4f87-9fe0-a88c56a98701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\stb_image">
+      <UniqueIdentifier>{e448b55e-d68e-4474-8c23-90b940cb4df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputController">
+      <UniqueIdentifier>{27fbefb5-2667-4f18-9ca4-5a3a5f50465e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{5c7b49e6-856b-42d3-ada7-ae97217f10cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Light">
+      <UniqueIdentifier>{6836d2a9-26b7-440f-a0c7-ae7b063e627a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{d89a7b5b-9e02-4e24-8350-634bdd608660}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LoadFuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGlStateFuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Source Files\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Resource Files\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Source Files\InputController</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Light</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileFuncs.h">
+      <Filter>Header Files\FuncsHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGlState.h">
+      <Filter>Header Files\FuncsHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Light</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="baseShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="baseShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
